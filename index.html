@@ -1,0 +1,282 @@
+<!-- ============================================================
+     ARCHIVO: index.html
+     DESCRIPCION: Pagina principal del sitio web educativo sobre
+                  Arquitectura de Software.
+     
+     ARQUITECTURA DEL PROYECTO:
+     Este sitio utiliza una arquitectura Multi-Page Application (MPA)
+     con la siguiente estructura de archivos:
+     
+     Clase_arquitectura/
+     |-- index.html                        <- Pagina principal
+     |-- css/main.css                      <- Estilos centralizados
+     |-- js/app.js                         <- Orquestador
+     |-- js/modules/                       <- Modulos JS
+     |-- pages/criterio1/                  <- Temas del Criterio 1
+     |-- pages/criterio2/                  <- Temas del Criterio 2
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura de Software - Material Educativo</title>
+    <link rel="stylesheet" href="./css/main.css?v=1.0.2">
+</head>
+<body>
+
+    <!-- NAVEGACION GLOBAL con Dropdowns por Criterio -->
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">
+            Arquitectura <span>de Software</span>
+        </div>
+
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">
+            |||
+        </button>
+
+        <ul class="navbar__menu">
+            <li><a href="./index.html" class="navbar__link navbar__link--active">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="./pages/criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="./pages/criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="./pages/criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="./pages/criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="./pages/criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="./pages/criterio2/flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="./pages/criterio2/centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="./pages/criterio2/llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="./pages/criterio2/arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="./pages/criterio2/principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- SECCION: Hero / Presentacion -->
+        <section class="hero">
+            <span class="hero__badge">Arquitectura de Software</span>
+            <h1 class="hero__title">Fundamentos y Estilos Arquitectonicos</h1>
+            <p class="hero__subtitle">
+                Identifica los distintos tipos de aplicaciones y los estilos arquitectonicos
+                adecuados para cada tipo de Sistema, tomando en cuenta la estructura y la norma
+                de cada arquitectura y patron de diseno.
+            </p>
+        </section>
+
+        <!-- ============================================================
+             CRITERIO DE DESEMPENO No. 1
+             ============================================================ -->
+        <section class="content-section">
+            <h2 class="content-section__title">Criterio de Desempeno No. 1</h2>
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Competencia</p>
+                <p class="info-panel__text">
+                    Reconoce correctamente los conceptos fundamentales de arquitectura de software,
+                    valorando el aporte que este realiza en el proceso de desarrollo de software.
+                </p>
+            </div>
+        </section>
+
+        <div class="cards-grid">
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">1.1</span>
+                <h3 class="card__title">Que es Arquitectura de Software</h3>
+                <p class="card__description">
+                    Interes por comprender conceptos nuevos y disposicion para investigar.
+                    Exposicion magistral sobre conceptos basicos de arquitectura de software
+                    y participacion activa en la discusion.
+                </p>
+                <a href="./pages/criterio1/que-es-arquitectura.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">1.2</span>
+                <h3 class="card__title">Importancia de la Arquitectura de Software</h3>
+                <p class="card__description">
+                    Capacidad de argumentacion logica y vision a largo plazo.
+                    Analisis comparativo de proyectos con y sin buena arquitectura
+                    para elaborar cuadros de ventajas y desventajas.
+                </p>
+                <a href="./pages/criterio1/importancia.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">1.3</span>
+                <h3 class="card__title">Clasificacion de Modelos Arquitectonicos</h3>
+                <p class="card__description">
+                    Capacidad de categorizacion y atencion a los detalles.
+                    Presentacion de taxonomias y clasificaciones de modelos
+                    para crear mapas conceptuales.
+                </p>
+                <a href="./pages/criterio1/clasificacion-modelos.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">1.4</span>
+                <h3 class="card__title">Estilos Arquitectonicos Basicos</h3>
+                <p class="card__description">
+                    Observacion detallada y capacidad de reconocimiento de patrones.
+                    Presentacion de estilos arquitectonicos comunes y reconocimiento
+                    de estilos en diagramas de sistemas existentes.
+                </p>
+                <a href="./pages/criterio1/estilos-basicos.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">1.5</span>
+                <h3 class="card__title">Ambitos de Aplicacion</h3>
+                <p class="card__description">
+                    Vision amplia de aplicaciones y curiosidad por diferentes contextos.
+                    Estudio de casos por ambito de aplicacion para investigar
+                    arquitecturas tipicas en un ambito especifico.
+                </p>
+                <a href="./pages/criterio1/ambitos-aplicacion.html" class="card__link">Explorar tema</a>
+            </article>
+
+        </div>
+
+        <!-- ============================================================
+             CRITERIO DE DESEMPENO No. 2
+             ============================================================ -->
+        <section class="content-section" style="margin-top: 3rem;">
+            <h2 class="content-section__title">Criterio de Desempeno No. 2</h2>
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Competencia</p>
+                <p class="info-panel__text">
+                    Diferencia los diferentes estilos arquitectonicos enfatizando los criterios
+                    de seleccion, identificando y explicando las caracteristicas de un modelo
+                    de referencia y estilo de arquitectura de software.
+                </p>
+            </div>
+        </section>
+
+        <div class="cards-grid">
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">2.1</span>
+                <h3 class="card__title">Estilo de Flujos de Datos: Tuberias y Filtros</h3>
+                <p class="card__description">
+                    Capacidad de seguimiento de flujos y precision en descripciones.
+                    Estudio del modelo tuberia-filtro con ejemplos practicos
+                    y diagramas de procesos.
+                </p>
+                <a href="./pages/criterio2/flujos-datos.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">2.2</span>
+                <h3 class="card__title">Estilos Centrados en Datos</h3>
+                <p class="card__description">
+                    Pensamiento en torno a datos y consideracion de la consistencia.
+                    Arquitecturas basadas en repositorios compartidos y patrones
+                    de acceso a datos.
+                </p>
+                <a href="./pages/criterio2/centrados-datos.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">2.3</span>
+                <h3 class="card__title">Estilos de Llamada y Retorno</h3>
+                <p class="card__description">
+                    Comprension de interacciones sincronas y vision de servicios.
+                    Patrones cliente-servidor, RPC y diseno de interacciones
+                    entre componentes.
+                </p>
+                <a href="./pages/criterio2/llamada-retorno.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">2.4</span>
+                <h3 class="card__title">Arquitectura en Capas</h3>
+                <p class="card__description">
+                    Organizacion por niveles de abstraccion y disciplina en separacion.
+                    Presentacion de arquitectura en capas con casos reales y sistemas
+                    de tres capas con responsabilidades claras.
+                </p>
+                <a href="./pages/criterio2/arquitectura-capas.html" class="card__link">Explorar tema</a>
+            </article>
+
+            <article class="card animate-on-scroll">
+                <span class="card__number">2.5</span>
+                <h3 class="card__title">Principios de la Arquitectura en Capas</h3>
+                <p class="card__description">
+                    Rigor en aplicacion de principios y comprension de conceptos abstractos.
+                    Discusion de principios como acoplamiento, cohesion y analisis de niveles
+                    en disenos dados.
+                </p>
+                <a href="./pages/criterio2/principios-capas.html" class="card__link">Explorar tema</a>
+            </article>
+
+        </div>
+
+        <!-- SECCION: Estructura del Proyecto -->
+        <section class="content-section" style="margin-top: 3rem;">
+            <h2 class="content-section__title">Estructura del Proyecto</h2>
+            <p class="content-section__text">
+                Este sitio web esta construido siguiendo una arquitectura limpia de frontend.
+                La separacion de archivos demuestra los mismos principios arquitectonicos
+                que se ensena en el curso.
+            </p>
+
+            <div id="code-project-structure" data-code-block data-filename="estructura-proyecto.txt" data-language="javascript">
+                <script type="text/plain">
+// Estructura de carpetas del proyecto
+// Demuestra: Separacion de Responsabilidades
+
+Clase_arquitectura/
+|
+|-- index.html                    // Pagina principal
+|-- css/main.css                  // Estilos centralizados
+|-- js/
+|   |-- app.js                    // Orquestador
+|   |-- modules/
+|       |-- navigation.js         // Navegacion
+|       |-- codeCanvas.js         // Bloques de codigo
+|       |-- interactions.js       // Interactividad UI
+|       |-- diagrams.js           // Diagramas Canvas
+|
+|-- pages/
+    |-- criterio1/                // Criterio de Desempeno 1
+    |   |-- que-es-arquitectura.html
+    |   |-- importancia.html
+    |   |-- clasificacion-modelos.html
+    |   |-- estilos-basicos.html
+    |   |-- ambitos-aplicacion.html
+    |
+    |-- criterio2/                // Criterio de Desempeno 2
+        |-- flujos-datos.html
+        |-- centrados-datos.html
+        |-- llamada-retorno.html
+        |-- arquitectura-capas.html
+        |-- principios-capas.html
+                </script>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Criterios de Desempeno 1 y 2</p>
+    </footer>
+
+    <script src="./js/modules/navigation.js"></script>
+    <script src="./js/modules/codeCanvas.js"></script>
+    <script src="./js/modules/interactions.js"></script>
+    <script src="./js/modules/diagrams.js"></script>
+    <script src="./js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!-- ============================================================
+     ARCHIVO: pages/criterio1/ambitos-aplicacion.html
+     TEMA: 1.5 - Ambitos de Aplicacion
+     
+     COMENTARIO ARQUITECTONICO:
+     Cada dominio o ambito de aplicacion tiene necesidades
+     arquitectonicas particulares. La arquitectura que funciona
+     para un sistema web de comercio electronico no es la misma
+     que la de un sistema embebido en tiempo real.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.5 Ambitos de Aplicacion</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="ambitos-aplicacion.html" class="navbar__link navbar__link--active">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio2/flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="../criterio2/centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="../criterio2/llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="../criterio2/arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="../criterio2/principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 1.5</span>
+            <h1 class="topic-header__title">Ambitos de Aplicacion</h1>
+            <p class="topic-header__description">
+                La arquitectura de software se adapta al dominio donde se aplica.
+                Sistemas web, moviles, embebidos, de inteligencia artificial o de
+                videojuegos requieren enfoques arquitectonicos distintos. Cada ambito
+                tiene sus propias restricciones, patrones preferidos y prioridades.
+            </p>
+        </header>
+
+        <!-- Ambito 1: Sistemas Web -->
+        <section class="content-section">
+            <h2 class="content-section__title">1. Sistemas Web y Comercio Electronico</h2>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Caracteristicas del ambito</p>
+                <p class="info-panel__text">
+                    Alta concurrencia de usuarios, necesidad de escalabilidad horizontal,
+                    disponibilidad 24/7, seguridad transaccional. Arquitecturas tipicas:
+                    Cliente-Servidor, Microservicios, Capas (MVC/MVP/MVVM).
+                </p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion__item accordion__item--open">
+                    <button class="accordion__trigger">Arquitectura Tipica: E-Commerce</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Capa / Servicio</th>
+                                        <th>Tecnologia Comun</th>
+                                        <th>Responsabilidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Frontend (SPA)</td>
+                                        <td>React, Angular, Vue</td>
+                                        <td>Interfaz de usuario, interaccion</td>
+                                    </tr>
+                                    <tr>
+                                        <td>API Gateway</td>
+                                        <td>Kong, Nginx, AWS API GW</td>
+                                        <td>Enrutamiento, autenticacion, rate limiting</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Servicio Catalogo</td>
+                                        <td>Node.js, Spring Boot</td>
+                                        <td>Productos, busqueda, categorias</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Servicio Pagos</td>
+                                        <td>Java, Go</td>
+                                        <td>Transacciones, PCI compliance</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Servicio Envios</td>
+                                        <td>Python, Node.js</td>
+                                        <td>Logistica, tracking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base de Datos</td>
+                                        <td>PostgreSQL + Redis (cache)</td>
+                                        <td>Persistencia y rendimiento</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cola de Mensajes</td>
+                                        <td>RabbitMQ, Kafka</td>
+                                        <td>Comunicacion asincrona entre servicios</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ambito 2: Aplicaciones Moviles -->
+        <section class="content-section">
+            <h2 class="content-section__title">2. Aplicaciones Moviles</h2>
+
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Caracteristicas del ambito</p>
+                <p class="info-panel__text">
+                    Recursos limitados (bateria, memoria, procesador), conectividad
+                    intermitente, necesidad de funcionar offline, multiples resoluciones
+                    de pantalla. Arquitecturas tipicas: MVVM, Clean Architecture,
+                    MVP con capas.
+                </p>
+            </div>
+
+            <div id="code-mobile" data-code-block data-filename="cleanArchitectureMobile.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// AMBITO MOVIL: Clean Architecture
+// Capas concentricas de dependencia hacia adentro
+// ============================================
+
+// CAPA 1: Entidades (centro, sin dependencias externas)
+// Reglas de negocio puras, reutilizables en cualquier plataforma
+var Producto = {
+    crear: function(id, nombre, precio) {
+        return {
+            id: id,
+            nombre: nombre,
+            precio: precio,
+            aplicarDescuento: function(porcentaje) {
+                return this.precio * (1 - porcentaje / 100);
+            }
+        };
+    }
+};
+
+// CAPA 2: Casos de Uso (logica de aplicacion)
+// Define QUE hace la app, no COMO lo muestra
+var BuscarProductosUseCase = {
+    ejecutar: function(repositorio, termino) {
+        // Busca localmente primero (modo offline)
+        var resultados = repositorio.buscarLocal(termino);
+        if (resultados.length > 0) return resultados;
+
+        // Si no hay resultados locales, busca en red
+        resultados = repositorio.buscarRemoto(termino);
+        // Guarda en cache local para uso offline
+        repositorio.guardarEnCache(resultados);
+        return resultados;
+    }
+};
+
+// CAPA 3: Repositorio (abstraccion de datos)
+// La app movil necesita manejar offline/online
+var ProductoRepository = {
+    cacheLocal: [],
+
+    buscarLocal: function(termino) {
+        return this.cacheLocal.filter(function(p) {
+            return p.nombre.toLowerCase().indexOf(termino.toLowerCase()) >= 0;
+        });
+    },
+
+    buscarRemoto: function(termino) {
+        // fetch() al servidor -- puede fallar si no hay red
+        console.log("Buscando en servidor: " + termino);
+        return []; // Simulado
+    },
+
+    guardarEnCache: function(productos) {
+        // SQLite o almacenamiento local del dispositivo
+        this.cacheLocal = this.cacheLocal.concat(productos);
+    }
+};
+
+// CAPA 4: Presentacion (ViewModel / Presenter)
+// Prepara datos para la UI, no conoce la vista directamente
+var ProductosViewModel = {
+    estado: { productos: [], cargando: false, error: null },
+
+    buscar: function(termino) {
+        this.estado.cargando = true;
+        try {
+            this.estado.productos = BuscarProductosUseCase.ejecutar(
+                ProductoRepository, termino
+            );
+        } catch(e) {
+            this.estado.error = "Error de conexion. Mostrando datos locales.";
+        }
+        this.estado.cargando = false;
+    }
+};
+
+// BENEFICIO: La misma logica funciona en Android, iOS y web
+// Solo cambia la capa de presentacion (UI nativa)
+                </script>
+            </div>
+        </section>
+
+        <!-- Ambito 3: Sistemas Embebidos / IoT -->
+        <section class="content-section">
+            <h2 class="content-section__title">3. Sistemas Embebidos e IoT</h2>
+
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Caracteristicas del ambito</p>
+                <p class="info-panel__text">
+                    Restricciones severas de hardware (memoria, procesador), requisitos
+                    de tiempo real, alta confiabilidad, interaccion con sensores y
+                    actuadores. Arquitecturas tipicas: Basadas en Eventos, Pipeline,
+                    Superloop, RTOS con tareas.
+                </p>
+            </div>
+
+            <div id="code-iot" data-code-block data-filename="sistemaIoT.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// AMBITO IoT: Arquitectura basada en eventos
+// con procesamiento en edge y nube
+// ============================================
+
+// CAPA EDGE: Corre en el dispositivo (sensor/actuador)
+var SensorTemperatura = {
+    id: "TEMP-001",
+    umbralAlerta: 35.0,
+
+    leerTemperatura: function() {
+        // Simula lectura de sensor fisico
+        return 20 + Math.random() * 25; // 20-45 grados
+    },
+
+    procesarLocalmente: function() {
+        var temp = this.leerTemperatura();
+        var lectura = {
+            sensorId: this.id,
+            valor: Math.round(temp * 10) / 10,
+            timestamp: Date.now(),
+            alerta: temp > this.umbralAlerta
+        };
+
+        // Decision local (edge computing): reaccionar de inmediato
+        if (lectura.alerta) {
+            Actuador.activarVentilador();
+        }
+
+        // Enviar a la nube para analisis historico
+        Gateway.enviar(lectura);
+        return lectura;
+    }
+};
+
+// CAPA GATEWAY: Agrega datos de multiples sensores
+var Gateway = {
+    buffer: [],
+    BATCH_SIZE: 10,
+
+    enviar: function(lectura) {
+        this.buffer.push(lectura);
+        // Optimiza ancho de banda: envia en lotes
+        if (this.buffer.length >= this.BATCH_SIZE) {
+            console.log("[Gateway] Enviando batch de " + this.buffer.length + " lecturas");
+            Nube.recibirBatch(this.buffer);
+            this.buffer = [];
+        }
+    }
+};
+
+// CAPA NUBE: Analisis, almacenamiento, dashboards
+var Nube = {
+    historial: [],
+
+    recibirBatch: function(lecturas) {
+        this.historial = this.historial.concat(lecturas);
+        console.log("[Nube] Total lecturas almacenadas: " + this.historial.length);
+
+        // Analisis en la nube
+        var alertas = lecturas.filter(function(l) { return l.alerta; });
+        if (alertas.length > 0) {
+            console.log("[Nube] " + alertas.length + " alertas detectadas.");
+        }
+    }
+};
+
+// ACTUADOR: Responde a comandos locales
+var Actuador = {
+    activarVentilador: function() {
+        console.log("[Actuador] Ventilador ENCENDIDO (temperatura alta)");
+    }
+};
+
+// Simulacion de ciclo de lectura
+for (var i = 0; i < 3; i++) {
+    var lectura = SensorTemperatura.procesarLocalmente();
+    console.log("Lectura " + (i+1) + ": " + lectura.valor + "C" +
+        (lectura.alerta ? " [ALERTA]" : ""));
+}
+                </script>
+            </div>
+        </section>
+
+        <!-- Ambito 4: Sistemas Empresariales -->
+        <section class="content-section">
+            <h2 class="content-section__title">4. Sistemas Empresariales (ERP, CRM)</h2>
+
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Caracteristicas del ambito</p>
+                <p class="info-panel__text">
+                    Procesos de negocio complejos, multiples roles de usuario,
+                    integracion con sistemas legados, transacciones criticas,
+                    regulaciones y compliance. Arquitecturas tipicas: Capas (N-Tier),
+                    SOA (Service-Oriented Architecture), CQRS.
+                </p>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Modulo ERP</th>
+                        <th>Estilo Arquitectonico</th>
+                        <th>Razon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Contabilidad</td>
+                        <td>Capas + Event Sourcing</td>
+                        <td>Auditoria completa, trazabilidad de transacciones</td>
+                    </tr>
+                    <tr>
+                        <td>Inventario</td>
+                        <td>CQRS</td>
+                        <td>Lecturas frecuentes (consultas), escrituras criticas (movimientos)</td>
+                    </tr>
+                    <tr>
+                        <td>Recursos Humanos</td>
+                        <td>Capas (MVC)</td>
+                        <td>CRUD intensivo, formularios complejos, reportes</td>
+                    </tr>
+                    <tr>
+                        <td>Ventas</td>
+                        <td>Microservicios</td>
+                        <td>Alta variabilidad, multiples canales (web, movil, tienda)</td>
+                    </tr>
+                    <tr>
+                        <td>Integracion</td>
+                        <td>SOA / ESB</td>
+                        <td>Conectar sistemas heterogeneos y legados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Ambito 5: Videojuegos -->
+        <section class="content-section">
+            <h2 class="content-section__title">5. Videojuegos</h2>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Caracteristicas del ambito</p>
+                <p class="info-panel__text">
+                    Rendimiento critico (60 FPS), gestion eficiente de memoria,
+                    fisica en tiempo real, renderizado 3D, multijugador en red.
+                    Arquitecturas tipicas: ECS (Entity-Component-System),
+                    Game Loop, Scene Graph.
+                </p>
+            </div>
+
+            <div id="code-games" data-code-block data-filename="ecsVideoJuego.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// AMBITO VIDEOJUEGOS: Entity-Component-System (ECS)
+// Composicion sobre herencia para maximo rendimiento
+// ============================================
+
+// COMPONENTES: Solo datos, sin logica
+var Posicion = function(x, y) { return { tipo: "posicion", x: x, y: y }; };
+var Velocidad = function(vx, vy) { return { tipo: "velocidad", vx: vx, vy: vy }; };
+var Salud = function(hp) { return { tipo: "salud", hp: hp, maxHp: hp }; };
+var Renderizable = function(sprite, ancho, alto) {
+    return { tipo: "renderizable", sprite: sprite, ancho: ancho, alto: alto };
+};
+
+// ENTIDADES: Solo un ID con componentes asociados
+var ultimoId = 0;
+var entidades = {};
+
+function crearEntidad(componentes) {
+    var id = ++ultimoId;
+    entidades[id] = {};
+    componentes.forEach(function(comp) {
+        entidades[id][comp.tipo] = comp;
+    });
+    return id;
+}
+
+// Crear un jugador (tiene posicion, velocidad, salud, renderizado)
+var jugador = crearEntidad([
+    Posicion(100, 200),
+    Velocidad(0, 0),
+    Salud(100),
+    Renderizable("jugador.png", 32, 32)
+]);
+
+// Crear un obstaculo (solo posicion y renderizado, sin velocidad ni salud)
+var roca = crearEntidad([
+    Posicion(300, 200),
+    Renderizable("roca.png", 48, 48)
+]);
+
+// SISTEMAS: Solo logica, operan sobre componentes
+var SistemaMovimiento = {
+    actualizar: function(deltaTime) {
+        Object.keys(entidades).forEach(function(id) {
+            var e = entidades[id];
+            // Solo procesa entidades con posicion Y velocidad
+            if (e.posicion && e.velocidad) {
+                e.posicion.x += e.velocidad.vx * deltaTime;
+                e.posicion.y += e.velocidad.vy * deltaTime;
+            }
+            // La roca no tiene velocidad -> no se mueve
+        });
+    }
+};
+
+var SistemaRenderizado = {
+    actualizar: function() {
+        Object.keys(entidades).forEach(function(id) {
+            var e = entidades[id];
+            if (e.posicion && e.renderizable) {
+                console.log("Dibujando " + e.renderizable.sprite +
+                    " en (" + e.posicion.x + ", " + e.posicion.y + ")");
+            }
+        });
+    }
+};
+
+// GAME LOOP: Ejecuta sistemas en orden cada frame
+function gameLoop(deltaTime) {
+    SistemaMovimiento.actualizar(deltaTime);
+    SistemaRenderizado.actualizar();
+}
+
+// Simular 1 frame
+console.log("--- Frame 1 ---");
+entidades[jugador].velocidad.vx = 5;
+gameLoop(0.016); // 60 FPS = 16ms por frame
+
+// VENTAJA ECS: Agregar capacidades sin modificar codigo existente
+// Ejemplo: hacer al jugador "envenenado" es solo agregar un componente
+                </script>
+            </div>
+        </section>
+
+        <!-- Resumen por Ambito -->
+        <section class="content-section">
+            <h2 class="content-section__title">Resumen: Arquitectura por Ambito</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ambito</th>
+                        <th>Prioridad #1</th>
+                        <th>Estilo Preferido</th>
+                        <th>Tecnologias Clave</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Web / E-Commerce</td>
+                        <td>Escalabilidad, Disponibilidad</td>
+                        <td>Microservicios, Capas</td>
+                        <td>React, Node, Docker, Kubernetes</td>
+                    </tr>
+                    <tr>
+                        <td>Movil</td>
+                        <td>Offline-first, UX fluida</td>
+                        <td>Clean Architecture, MVVM</td>
+                        <td>Swift, Kotlin, Flutter, SQLite</td>
+                    </tr>
+                    <tr>
+                        <td>IoT / Embebidos</td>
+                        <td>Tiempo real, Confiabilidad</td>
+                        <td>Event-Driven, Pipeline</td>
+                        <td>C/C++, MQTT, Edge Computing</td>
+                    </tr>
+                    <tr>
+                        <td>Empresarial (ERP)</td>
+                        <td>Integracion, Compliance</td>
+                        <td>SOA, Capas, CQRS</td>
+                        <td>Java EE, .NET, SAP, Oracle</td>
+                    </tr>
+                    <tr>
+                        <td>Videojuegos</td>
+                        <td>Rendimiento (60 FPS)</td>
+                        <td>ECS, Game Loop</td>
+                        <td>C++, Unity (C#), Unreal</td>
+                    </tr>
+                    <tr>
+                        <td>IA / Machine Learning</td>
+                        <td>Procesamiento de datos</td>
+                        <td>Pipeline, Microservicios</td>
+                        <td>Python, TensorFlow, MLflow</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Investigar Arquitecturas Tipicas en un Ambito</p>
+                <p class="info-panel__text">
+                    Elija un ambito de aplicacion de su interes (web, movil, IoT, empresarial,
+                    videojuegos u otro). Investigue un caso de estudio real de una empresa o
+                    producto reconocido en ese ambito. Documente: que estilo arquitectonico usan,
+                    por que lo eligieron, que problemas resolvio y que desafios presenta.
+                    Presente sus hallazgos al grupo.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 1.5 - Ambitos de Aplicacion</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

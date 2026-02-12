@@ -1,0 +1,345 @@
+<!-- ============================================================
+     ARCHIVO: pages/llamada-retorno.html
+     TEMA: 2.3 - Estilos de Llamada y Retorno
+     
+     COMENTARIO ARQUITECTONICO:
+     El estilo de llamada y retorno es el mas utilizado en la
+     programacion convencional. Se basa en la idea de que un
+     componente (el llamador) transfiere el control a otro
+     componente (el llamado), espera a que termine, y luego
+     recupera el control junto con el resultado.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.3 Estilos de Llamada y Retorno</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="../criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="../criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="../criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="../criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="llamada-retorno.html" class="navbar__link navbar__link--active">2.3 Llamada y Retorno</a>
+                    <a href="arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 2.3</span>
+            <h1 class="topic-header__title">Estilos de Llamada y Retorno</h1>
+            <p class="topic-header__description">
+                El estilo de llamada y retorno se fundamenta en la descomposicion de un programa
+                en subprogramas (funciones, procedimientos, metodos) que se invocan mutuamente.
+                El flujo de control sigue una jerarquia donde un componente llama a otro, espera
+                su resultado y continua su ejecucion.
+            </p>
+        </header>
+
+        <!-- Sub-estilos -->
+        <section class="content-section">
+            <h2 class="content-section__title">Sub-Estilos de Llamada y Retorno</h2>
+
+            <div class="accordion">
+                <div class="accordion__item accordion__item--open">
+                    <button class="accordion__trigger">Programa Principal y Subrutinas</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>El estilo mas basico de llamada y retorno. Un programa principal
+                            descompone su funcionalidad en subrutinas (funciones o procedimientos).
+                            El programa principal controla el flujo, delegando tareas especificas
+                            a cada subrutina.</p>
+                            <br>
+                            <p><strong>Caracteristicas:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Jerarquia clara de llamadas</li>
+                                <li>La subrutina retorna el control al llamador al terminar</li>
+                                <li>Puede compartir datos via parametros o variables globales</li>
+                                <li>Base de la programacion estructurada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Orientado a Objetos (OO)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>En el estilo orientado a objetos, los componentes son objetos que
+                            encapsulan datos y comportamiento. Los objetos se comunican mediante
+                            paso de mensajes (invocacion de metodos). Cada objeto es responsable
+                            de su propio estado interno.</p>
+                            <br>
+                            <p><strong>Diferencias con subrutinas simples:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Encapsulamiento: los datos estan protegidos dentro del objeto</li>
+                                <li>Herencia: reutilizacion de comportamiento entre clases</li>
+                                <li>Polimorfismo: la misma llamada puede ejecutar diferentes comportamientos</li>
+                                <li>Los objetos tienen identidad propia y ciclo de vida</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Cliente-Servidor</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>El estilo cliente-servidor extiende la llamada y retorno a traves de
+                            la red. Un cliente solicita un servicio a un servidor remoto, espera la
+                            respuesta y continua. Es la base de la arquitectura web moderna.</p>
+                            <br>
+                            <p><strong>Caracteristicas:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Separacion fisica entre cliente y servidor</li>
+                                <li>Comunicacion a traves de protocolos (HTTP, TCP, RPC)</li>
+                                <li>El servidor puede atender multiples clientes simultaneamente</li>
+                                <li>Centralizacion de logica y datos en el servidor</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">RPC - Llamada a Procedimiento Remoto</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>RPC (Remote Procedure Call) permite invocar funciones en un servidor
+                            remoto como si fueran locales. El programador escribe el codigo de la
+                            misma forma que una llamada local; el middleware se encarga de la
+                            comunicacion de red.</p>
+                            <br>
+                            <p><strong>Flujo de una llamada RPC:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>1. El cliente invoca una funcion local (stub del cliente)</li>
+                                <li>2. El stub serializa los parametros y los envia por la red</li>
+                                <li>3. El stub del servidor recibe y deserializa los datos</li>
+                                <li>4. El servidor ejecuta la funcion real</li>
+                                <li>5. El resultado viaja de vuelta por el mismo camino</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diagrama -->
+        <section class="content-section">
+            <h2 class="content-section__title">Diagrama del Patron</h2>
+            <div class="diagram-container">
+                <p class="diagram-container__title">Diagrama - Programa Principal y Subrutinas</p>
+                <canvas id="diagram-call-return" data-diagram="callReturn" style="width: 100%;"></canvas>
+            </div>
+        </section>
+
+        <!-- Ejemplo OO -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Estilo Orientado a Objetos</h2>
+            <p class="content-section__text">
+                El siguiente ejemplo demuestra una jerarquia de llamadas entre objetos.
+                El objeto Controlador delega tareas a objetos Servicio, que a su vez
+                llaman a objetos Repositorio. Cada nivel retorna su resultado al llamador.
+            </p>
+
+            <div id="code-oo" data-code-block data-filename="callReturn.java" data-language="java">
+                <script type="text/plain">
+// ============================================
+// PATRON: Llamada y Retorno - Orientado a Objetos
+// Jerarquia: Controlador -> Servicio -> Repositorio
+// Cada metodo retorna el control al llamador
+// ============================================
+
+// CAPA 3: Repositorio (acceso a datos)
+public class UsuarioRepositorio {
+    
+    // Llamada al almacen de datos
+    public Usuario buscarPorId(int id) {
+        // Simulacion de consulta a base de datos
+        return new Usuario(id, "Ana Garcia", "ana@mail.com");
+    }
+    
+    // La funcion RETORNA el resultado al llamador
+    public boolean guardar(Usuario usuario) {
+        System.out.println("Guardando usuario: " + usuario.getNombre());
+        return true; // Retorno al llamador
+    }
+}
+
+// CAPA 2: Servicio (logica de negocio)
+public class UsuarioServicio {
+    
+    private UsuarioRepositorio repositorio;
+    
+    public UsuarioServicio() {
+        this.repositorio = new UsuarioRepositorio();
+    }
+    
+    // LLAMADA al repositorio, proceso, y RETORNO
+    public Usuario obtenerUsuario(int id) {
+        // Llamada -> transferencia de control al repositorio
+        Usuario usuario = this.repositorio.buscarPorId(id);
+        // Retorno <- el control vuelve aqui
+        
+        // Logica de negocio
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        
+        return usuario; // Retorno al controlador
+    }
+}
+
+// CAPA 1: Controlador (punto de entrada)
+public class UsuarioControlador {
+    
+    private UsuarioServicio servicio;
+    
+    public UsuarioControlador() {
+        this.servicio = new UsuarioServicio();
+    }
+    
+    // LLAMADA al servicio
+    public void mostrarUsuario(int id) {
+        // Llamada -> control pasa al servicio
+        Usuario usuario = this.servicio.obtenerUsuario(id);
+        // Retorno <- control regresa aqui
+        
+        System.out.println("Usuario: " + usuario.getNombre());
+    }
+}
+
+// PROGRAMA PRINCIPAL
+// Inicia la cadena de llamadas
+public class Main {
+    public static void main(String[] args) {
+        UsuarioControlador controlador = new UsuarioControlador();
+        // Main -> Controlador -> Servicio -> Repositorio
+        // Repositorio -> Servicio -> Controlador -> Main
+        controlador.mostrarUsuario(1);
+    }
+}
+                </script>
+            </div>
+        </section>
+
+        <!-- Ejemplo Cliente-Servidor -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Cliente-Servidor Simple</h2>
+
+            <div id="code-client-server" data-code-block data-filename="clienteServidor.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// PATRON: Cliente-Servidor
+// El cliente LLAMA al servidor (request)
+// El servidor procesa y RETORNA (response)
+// ============================================
+
+// --- LADO DEL SERVIDOR ---
+// El servidor expone servicios que los clientes pueden invocar
+
+const servidor = {
+    // Base de datos simulada en memoria
+    productos: [
+        { id: 1, nombre: "Laptop", precio: 999 },
+        { id: 2, nombre: "Monitor", precio: 299 },
+        { id: 3, nombre: "Teclado", precio: 79 }
+    ],
+
+    // Servicio: procesar solicitud del cliente
+    procesarSolicitud: function(solicitud) {
+        console.log("[Servidor] Solicitud recibida:", solicitud.tipo);
+
+        switch (solicitud.tipo) {
+            case "LISTAR":
+                // Retorna la lista de productos
+                return { exito: true, datos: this.productos };
+
+            case "BUSCAR":
+                // Busca un producto por ID
+                const producto = this.productos.find(
+                    function(p) { return p.id === solicitud.id; }
+                );
+                return { exito: true, datos: producto || null };
+
+            default:
+                return { exito: false, error: "Tipo no reconocido" };
+        }
+    }
+};
+
+// --- LADO DEL CLIENTE ---
+// El cliente envia solicitudes y espera respuestas
+
+const cliente = {
+    // LLAMADA al servidor
+    solicitarProductos: function() {
+        const solicitud = { tipo: "LISTAR" };
+        // Llamada -> control pasa al servidor
+        const respuesta = servidor.procesarSolicitud(solicitud);
+        // Retorno <- control regresa al cliente
+
+        if (respuesta.exito) {
+            console.log("[Cliente] Productos recibidos:",
+                respuesta.datos.length);
+        }
+        return respuesta.datos;
+    }
+};
+
+// Ejecucion: el cliente LLAMA, el servidor RETORNA
+cliente.solicitarProductos();
+                </script>
+            </div>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Ejercicio Practico</p>
+                <p class="info-panel__text">
+                    Disenar interacciones cliente-servidor simples. Cree un diagrama de secuencia
+                    que muestre las llamadas y retornos entre un cliente web, un servidor de
+                    aplicaciones y una base de datos para la operacion de "registrar un nuevo usuario".
+                    Identifique claramente cada punto de llamada y cada punto de retorno.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 2.3 - Estilos de Llamada y Retorno</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

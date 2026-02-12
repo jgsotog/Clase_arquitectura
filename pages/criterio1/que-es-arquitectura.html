@@ -1,0 +1,373 @@
+<!-- ============================================================
+     ARCHIVO: pages/criterio1/que-es-arquitectura.html
+     TEMA: 1.1 - Que es Arquitectura de Software
+     
+     COMENTARIO ARQUITECTONICO:
+     La arquitectura de software define la estructura fundamental
+     de un sistema: sus componentes, sus relaciones y los principios
+     que guian su diseno y evolucion.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1 Que es Arquitectura de Software</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="que-es-arquitectura.html" class="navbar__link navbar__link--active">1.1 Que es Arquitectura</a>
+                    <a href="importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio2/flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="../criterio2/centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="../criterio2/llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="../criterio2/arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="../criterio2/principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 1.1</span>
+            <h1 class="topic-header__title">Que es Arquitectura de Software</h1>
+            <p class="topic-header__description">
+                La arquitectura de software es la estructura o estructuras de un sistema,
+                que comprende los componentes de software, las propiedades externamente visibles
+                de esos componentes y las relaciones entre ellos. Es la base sobre la que se
+                construye todo sistema de software.
+            </p>
+        </header>
+
+        <!-- Definiciones formales -->
+        <section class="content-section">
+            <h2 class="content-section__title">Definiciones Formales</h2>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Segun IEEE 1471-2000</p>
+                <p class="info-panel__text">
+                    "La organizacion fundamental de un sistema representada en sus componentes,
+                    las relaciones entre ellos y con el ambiente, y los principios que guian
+                    su diseno y evolucion."
+                </p>
+            </div>
+
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Segun Bass, Clements y Kazman</p>
+                <p class="info-panel__text">
+                    "La arquitectura de software de un programa o sistema de computacion es la
+                    estructura o estructuras del sistema, que comprende los elementos de software,
+                    las propiedades externamente visibles de esos elementos, y las relaciones
+                    entre ellos."
+                </p>
+            </div>
+
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Segun Martin Fowler</p>
+                <p class="info-panel__text">
+                    "La arquitectura se refiere a las decisiones importantes, aquellas que son
+                    dificiles de cambiar. Son las decisiones que desearas haber tomado
+                    correctamente al principio de un proyecto."
+                </p>
+            </div>
+        </section>
+
+        <!-- Componentes de la Arquitectura -->
+        <section class="content-section">
+            <h2 class="content-section__title">Elementos que Componen una Arquitectura</h2>
+
+            <div class="accordion">
+                <div class="accordion__item accordion__item--open">
+                    <button class="accordion__trigger">Componentes</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>Los componentes son las unidades fundamentales de software que
+                            encapsulan funcionalidad. Pueden ser modulos, clases, servicios,
+                            microservicios, paquetes o cualquier unidad de encapsulamiento
+                            que el sistema defina.</p>
+                            <br>
+                            <p>Cada componente tiene:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Una interfaz publica (lo que expone al exterior)</li>
+                                <li>Una implementacion interna (detalles ocultos)</li>
+                                <li>Responsabilidades bien definidas</li>
+                                <li>Dependencias explicitas con otros componentes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Conectores</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>Los conectores definen como se comunican los componentes.
+                            Determinan el mecanismo de interaccion entre las partes del sistema.</p>
+                            <br>
+                            <p>Tipos de conectores:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Llamadas a procedimiento / metodo</li>
+                                <li>Eventos y mensajes</li>
+                                <li>Datos compartidos en memoria</li>
+                                <li>Protocolos de red (HTTP, TCP, gRPC)</li>
+                                <li>Colas de mensajes (RabbitMQ, Kafka)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Configuracion</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>La configuracion describe como se organizan los componentes y
+                            conectores en una topologia especifica. Es el "mapa" del sistema
+                            que muestra que componente se conecta con cual y mediante que tipo
+                            de conector.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Restricciones</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>Las restricciones son las reglas y limitaciones que la arquitectura
+                            impone al diseno. Pueden ser tecnologicas, de negocio o de calidad.</p>
+                            <br>
+                            <p>Ejemplos:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>"La capa de presentacion no debe acceder a la base de datos directamente"</li>
+                                <li>"Todas las comunicaciones deben usar HTTPS"</li>
+                                <li>"El tiempo de respuesta no debe superar 200ms"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analogia -->
+        <section class="content-section">
+            <h2 class="content-section__title">Analogia: Arquitectura de Edificios vs Software</h2>
+            <p class="content-section__text">
+                Asi como un arquitecto civil disena la estructura de un edificio antes de
+                construirlo, un arquitecto de software disena la estructura del sistema
+                antes de programarlo. La siguiente tabla muestra la correspondencia:
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Arquitectura Civil</th>
+                        <th>Arquitectura de Software</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Planos del edificio</td>
+                        <td>Diagramas de arquitectura (UML, C4)</td>
+                    </tr>
+                    <tr>
+                        <td>Cimientos y estructuras de carga</td>
+                        <td>Frameworks y servicios base</td>
+                    </tr>
+                    <tr>
+                        <td>Habitaciones y pisos</td>
+                        <td>Modulos, componentes y capas</td>
+                    </tr>
+                    <tr>
+                        <td>Tuberias y cableado</td>
+                        <td>Conectores, APIs, protocolos</td>
+                    </tr>
+                    <tr>
+                        <td>Normas de construccion</td>
+                        <td>Principios SOLID, patrones de diseno</td>
+                    </tr>
+                    <tr>
+                        <td>Codigo de seguridad</td>
+                        <td>Requisitos no funcionales (rendimiento, seguridad)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Ejemplo de codigo -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Decisiones Arquitectonicas en Codigo</h2>
+            <p class="content-section__text">
+                Las decisiones arquitectonicas se reflejan en como organizamos nuestro codigo.
+                El siguiente ejemplo muestra dos enfoques diferentes para el mismo problema,
+                uno sin arquitectura clara y otro con una estructura definida.
+            </p>
+
+            <div class="tabs">
+                <div class="tabs__nav">
+                    <button class="tabs__button tabs__button--active" data-tab="sin-arq">Sin Arquitectura</button>
+                    <button class="tabs__button" data-tab="con-arq">Con Arquitectura</button>
+                </div>
+
+                <div class="tabs__panel tabs__panel--active" data-tab-panel="sin-arq">
+                    <div id="code-no-arch" data-code-block data-filename="sinArquitectura.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// SIN ARQUITECTURA CLARA
+// Todo mezclado en un solo archivo/funcion
+// Dificil de mantener, probar y escalar
+// ============================================
+
+function procesarPedido(datos) {
+    // Validacion de UI mezclada con negocio
+    if (!document.getElementById('nombre').value) {
+        alert('Falta el nombre');
+        return;
+    }
+    
+    // Logica de negocio mezclada con acceso a datos
+    const precio = datos.cantidad * datos.precioUnitario;
+    const impuesto = precio * 0.16;
+    const total = precio + impuesto;
+    
+    // Acceso directo a base de datos desde la UI
+    const conexion = mysql.connect('localhost:3306');
+    conexion.query('INSERT INTO pedidos VALUES(...)');
+    
+    // Envio de email mezclado con todo lo anterior
+    smtp.send({
+        to: datos.email,
+        subject: 'Pedido confirmado',
+        body: 'Total: $' + total
+    });
+    
+    // Actualizacion de UI
+    document.getElementById('resultado').innerHTML = 
+        'Pedido procesado: $' + total;
+}
+
+// PROBLEMAS:
+// - Imposible probar sin una BD real y servidor SMTP
+// - Cambiar la BD requiere modificar la funcion de UI
+// - No se puede reutilizar la logica de negocio
+// - Un cambio en el email afecta todo lo demas
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="con-arq">
+                    <div id="code-with-arch" data-code-block data-filename="conArquitectura.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// CON ARQUITECTURA CLARA
+// Responsabilidades separadas en modulos
+// Facil de mantener, probar y escalar
+// ============================================
+
+// MODULO 1: Validacion (responsabilidad unica)
+const Validador = {
+    validarPedido: function(datos) {
+        if (!datos.nombre) return { valido: false, error: 'Falta nombre' };
+        if (datos.cantidad <= 0) return { valido: false, error: 'Cantidad invalida' };
+        return { valido: true };
+    }
+};
+
+// MODULO 2: Logica de Negocio (reglas del dominio)
+const CalculadorPrecios = {
+    TASA_IMPUESTO: 0.16,
+    calcular: function(cantidad, precioUnitario) {
+        const subtotal = cantidad * precioUnitario;
+        const impuesto = subtotal * this.TASA_IMPUESTO;
+        return { subtotal: subtotal, impuesto: impuesto, total: subtotal + impuesto };
+    }
+};
+
+// MODULO 3: Persistencia (acceso a datos aislado)
+const PedidoRepositorio = {
+    guardar: function(pedido) {
+        // Detalle de BD encapsulado aqui
+        return fetch('/api/pedidos', {
+            method: 'POST',
+            body: JSON.stringify(pedido)
+        });
+    }
+};
+
+// MODULO 4: Notificaciones (comunicacion aislada)
+const Notificador = {
+    confirmarPedido: function(email, total) {
+        return fetch('/api/email', {
+            method: 'POST',
+            body: JSON.stringify({ to: email, total: total })
+        });
+    }
+};
+
+// ORQUESTADOR: Coordina los modulos sin logica propia
+async function procesarPedido(datos) {
+    const validacion = Validador.validarPedido(datos);
+    if (!validacion.valido) return validacion;
+
+    const precios = CalculadorPrecios.calcular(datos.cantidad, datos.precioUnitario);
+    await PedidoRepositorio.guardar({ ...datos, ...precios });
+    await Notificador.confirmarPedido(datos.email, precios.total);
+
+    return { exito: true, total: precios.total };
+}
+
+// BENEFICIOS:
+// - Cada modulo se prueba de forma independiente
+// - Cambiar la BD no afecta la logica ni la UI
+// - La logica de precios es reutilizable
+// - Facil de entender y mantener
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Tomar apuntes y participar activamente</p>
+                <p class="info-panel__text">
+                    Tome apuntes detallados sobre los conceptos presentados y participe
+                    activamente en la discusion de conceptos. Investigue al menos dos
+                    definiciones adicionales de "arquitectura de software" de autores
+                    reconocidos y compare sus perspectivas.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 1.1 - Que es Arquitectura de Software</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

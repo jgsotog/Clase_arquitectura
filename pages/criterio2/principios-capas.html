@@ -1,0 +1,517 @@
+<!-- ============================================================
+     ARCHIVO: pages/principios-capas.html
+     TEMA: 2.5 - Principios de la Arquitectura en Capas
+     
+     COMENTARIO ARQUITECTONICO:
+     Este tema profundiza en los principios fundamentales que
+     sustentan la arquitectura en capas: acoplamiento, cohesion,
+     abstraccion y separacion de responsabilidades. Estos principios
+     son aplicables a cualquier estilo arquitectonico.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.5 Principios de la Arquitectura en Capas</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="../criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="../criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="../criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="../criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="principios-capas.html" class="navbar__link navbar__link--active">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 2.5</span>
+            <h1 class="topic-header__title">Principios de la Arquitectura en Capas</h1>
+            <p class="topic-header__description">
+                Los principios arquitectonicos son las reglas fundamentales que guian el diseno
+                de sistemas de software de calidad. Comprender estos principios permite tomar
+                decisiones informadas sobre la organizacion y estructura del sistema.
+            </p>
+        </header>
+
+        <!-- Principio 1: Acoplamiento -->
+        <section class="content-section">
+            <h2 class="content-section__title">Principio 1: Acoplamiento</h2>
+            <p class="content-section__text">
+                El acoplamiento mide el grado de dependencia entre modulos o componentes de un
+                sistema. Un acoplamiento bajo (loose coupling) es deseable porque permite modificar
+                un componente sin afectar a los demas. Un acoplamiento alto (tight coupling)
+                dificulta el mantenimiento y la evolucion del sistema.
+            </p>
+
+            <div class="tabs">
+                <div class="tabs__nav">
+                    <button class="tabs__button tabs__button--active" data-tab="alto-acoplamiento">Alto Acoplamiento</button>
+                    <button class="tabs__button" data-tab="bajo-acoplamiento">Bajo Acoplamiento</button>
+                    <button class="tabs__button" data-tab="niveles-acoplamiento">Niveles</button>
+                </div>
+
+                <div class="tabs__panel tabs__panel--active" data-tab-panel="alto-acoplamiento">
+                    <div class="info-panel info-panel--pink">
+                        <p class="info-panel__title">Problema: Alto Acoplamiento</p>
+                        <p class="info-panel__text">
+                            Cuando un modulo depende fuertemente de los detalles internos de otro,
+                            cualquier cambio en uno requiere cambios en el otro.
+                        </p>
+                    </div>
+
+                    <div id="code-high-coupling" data-code-block data-filename="altoAcoplamiento.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// EJEMPLO: ALTO ACOPLAMIENTO (NO recomendado)
+// La vista accede DIRECTAMENTE a la base de datos
+// violando la separacion de capas.
+// ============================================
+
+const VistaProductos = {
+
+    // PROBLEMA: La vista conoce la estructura de la BD
+    mostrarProductos: function() {
+        // Accede directamente al almacen interno (detalle)
+        const datos = BaseDeDatos._tablas.productos;
+
+        // PROBLEMA: Conoce el formato exacto del almacen
+        datos.forEach(function(fila) {
+            // Usa columnas internas de la BD
+            console.log(fila._id + ': ' + fila._col_nombre);
+        });
+    },
+
+    // PROBLEMA: La vista hace calculos de negocio
+    calcularDescuento: function(productoId) {
+        const producto = BaseDeDatos._tablas.productos.find(
+            function(p) { return p._id === productoId; }
+        );
+        // Regla de negocio en la vista (violacion)
+        return producto._col_precio * 0.15;
+    }
+};
+
+// Si cambiamos la estructura de BaseDeDatos._tablas,
+// la vista SE ROMPE. Esto es alto acoplamiento.
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="bajo-acoplamiento">
+                    <div class="info-panel info-panel--green">
+                        <p class="info-panel__title">Solucion: Bajo Acoplamiento</p>
+                        <p class="info-panel__text">
+                            Cada capa expone una interfaz publica limpia. Los detalles internos
+                            estan ocultos. Los cambios internos no afectan a otras capas.
+                        </p>
+                    </div>
+
+                    <div id="code-low-coupling" data-code-block data-filename="bajoAcoplamiento.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// EJEMPLO: BAJO ACOPLAMIENTO (Recomendado)
+// Cada capa solo conoce la interfaz publica
+// de la capa inferior, no sus detalles internos.
+// ============================================
+
+// CAPA DE DATOS: Interfaz publica simple
+const ProductoRepo = {
+    obtenerTodos: function() {
+        // Detalle interno oculto: puede ser BD, API, archivo
+        return this._almacen.map(function(item) {
+            // Transforma al formato publico
+            return { id: item.id, nombre: item.nombre, 
+                     precio: item.precio };
+        });
+    }
+};
+
+// CAPA DE NEGOCIO: Solo usa la interfaz publica
+const ProductoServicio = {
+    listarConDescuento: function(porcentaje) {
+        // Usa la interfaz publica, NO detalles internos
+        const productos = ProductoRepo.obtenerTodos();
+        return productos.map(function(p) {
+            return {
+                id: p.id,
+                nombre: p.nombre,
+                precioOriginal: p.precio,
+                precioFinal: p.precio * (1 - porcentaje / 100)
+            };
+        });
+    }
+};
+
+// CAPA DE PRESENTACION: Solo usa la capa de negocio
+const VistaProductos = {
+    mostrar: function() {
+        // Llama al servicio, no al repositorio directamente
+        const productos = ProductoServicio.listarConDescuento(15);
+        productos.forEach(function(p) {
+            console.log(p.nombre + ': $' + p.precioFinal);
+        });
+    }
+};
+
+// Si cambiamos la implementacion del repositorio
+// (de memoria a PostgreSQL), las demas capas NO
+// necesitan ningun cambio. Esto es bajo acoplamiento.
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="niveles-acoplamiento">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel</th>
+                                <th>Tipo</th>
+                                <th>Descripcion</th>
+                                <th>Calidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Acoplamiento de datos</td>
+                                <td>Los modulos comparten datos a traves de parametros simples</td>
+                                <td class="text-green">Mejor</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Acoplamiento de marca</td>
+                                <td>Los modulos comparten una estructura de datos compuesta</td>
+                                <td class="text-green">Bueno</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Acoplamiento de control</td>
+                                <td>Un modulo controla el flujo de otro mediante banderas</td>
+                                <td class="text-orange">Regular</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Acoplamiento externo</td>
+                                <td>Los modulos comparten un formato de datos externo impuesto</td>
+                                <td class="text-orange">Regular</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Acoplamiento comun</td>
+                                <td>Los modulos comparten datos globales</td>
+                                <td class="text-pink">Malo</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Acoplamiento de contenido</td>
+                                <td>Un modulo modifica el contenido interno de otro</td>
+                                <td class="text-pink">Peor</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principio 2: Cohesion -->
+        <section class="content-section">
+            <h2 class="content-section__title">Principio 2: Cohesion</h2>
+            <p class="content-section__text">
+                La cohesion mide cuanto se relacionan las responsabilidades dentro de un mismo
+                modulo. Una alta cohesion es deseable: significa que el modulo tiene un proposito
+                claro y todas sus funciones contribuyen a ese proposito. Una baja cohesion indica
+                que el modulo hace demasiadas cosas no relacionadas.
+            </p>
+
+            <div id="code-cohesion" data-code-block data-filename="cohesion.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// COMPARACION: BAJA vs ALTA COHESION
+// ============================================
+
+// --- BAJA COHESION (NO recomendado) ---
+// Este modulo hace muchas cosas no relacionadas
+const ModuloMezclado = {
+    calcularImpuestos: function(monto) { /* ... */ },
+    enviarEmail: function(destinatario) { /* ... */ },
+    generarReporte: function() { /* ... */ },
+    validarContrasena: function(pass) { /* ... */ },
+    redimensionarImagen: function(img) { /* ... */ }
+};
+// Problema: Las funciones no tienen relacion entre si.
+// Si necesitamos cambiar el email, tocamos un modulo
+// que tambien maneja impuestos e imagenes.
+
+// --- ALTA COHESION (Recomendado) ---
+// Cada modulo tiene UN proposito claro
+
+const ServicioFiscal = {
+    calcularIVA: function(monto) { return monto * 0.16; },
+    calcularISR: function(ingreso) { return ingreso * 0.30; },
+    generarFactura: function(datos) { /* ... */ }
+};
+// Todas las funciones se relacionan con temas fiscales.
+
+const ServicioNotificaciones = {
+    enviarEmail: function(destinatario, asunto) { /* ... */ },
+    enviarSMS: function(telefono, mensaje) { /* ... */ },
+    registrarEnvio: function(tipo, destino) { /* ... */ }
+};
+// Todas las funciones se relacionan con notificaciones.
+
+const ServicioSeguridad = {
+    validarContrasena: function(pass) { /* ... */ },
+    hashearContrasena: function(pass) { /* ... */ },
+    verificarToken: function(token) { /* ... */ }
+};
+// Todas las funciones se relacionan con seguridad.
+
+// BENEFICIO: Cada modulo es mas facil de entender,
+// probar, mantener y reutilizar.
+                </script>
+            </div>
+
+            <table class="data-table" style="margin-top: 1.5rem;">
+                <thead>
+                    <tr>
+                        <th>Nivel</th>
+                        <th>Tipo de Cohesion</th>
+                        <th>Descripcion</th>
+                        <th>Calidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7</td>
+                        <td>Funcional</td>
+                        <td>Todas las partes contribuyen a una sola tarea bien definida</td>
+                        <td class="text-green">Mejor</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Secuencial</td>
+                        <td>Las salidas de una parte son entradas de la siguiente</td>
+                        <td class="text-green">Buena</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Comunicacional</td>
+                        <td>Las partes operan sobre los mismos datos</td>
+                        <td class="text-green">Buena</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Procedimental</td>
+                        <td>Las partes deben ejecutarse en un orden especifico</td>
+                        <td class="text-orange">Regular</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Temporal</td>
+                        <td>Las partes se ejecutan al mismo tiempo pero no se relacionan</td>
+                        <td class="text-orange">Regular</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Logica</td>
+                        <td>Las partes estan relacionadas logicamente pero hacen cosas distintas</td>
+                        <td class="text-pink">Mala</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Coincidental</td>
+                        <td>Las partes no tienen ninguna relacion entre si</td>
+                        <td class="text-pink">Peor</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Principio 3: Abstraccion -->
+        <section class="content-section">
+            <h2 class="content-section__title">Principio 3: Niveles de Abstraccion</h2>
+            <p class="content-section__text">
+                Cada capa en una arquitectura en capas representa un nivel de abstraccion diferente.
+                Las capas superiores son mas abstractas (cercanas al usuario) y las inferiores son
+                mas concretas (cercanas al hardware o almacenamiento).
+            </p>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Capa mas alta = Mayor abstraccion</p>
+                <p class="info-panel__text">
+                    La capa de presentacion usa conceptos como "mostrar producto" o "formulario de
+                    registro". No necesita saber si los datos estan en MySQL o MongoDB.
+                </p>
+            </div>
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Capa media = Abstraccion intermedia</p>
+                <p class="info-panel__text">
+                    La capa de negocio usa conceptos como "calcular descuento" o "validar pedido".
+                    No necesita saber como se muestra en pantalla ni como se guarda en disco.
+                </p>
+            </div>
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Capa mas baja = Menor abstraccion</p>
+                <p class="info-panel__text">
+                    La capa de datos usa conceptos como "INSERT INTO productos" o "db.collection.find()".
+                    Trabaja con los detalles concretos del almacenamiento.
+                </p>
+            </div>
+        </section>
+
+        <!-- Principio 4: Separacion de Responsabilidades -->
+        <section class="content-section">
+            <h2 class="content-section__title">Principio 4: Separacion de Responsabilidades (SoC)</h2>
+            <p class="content-section__text">
+                El principio de Separacion de Responsabilidades (Separation of Concerns) establece
+                que cada modulo debe ocuparse de una sola preocupacion o aspecto del sistema.
+                Este es el principio que fundamenta toda la arquitectura en capas.
+            </p>
+
+            <div id="code-soc" data-code-block data-filename="separacionResponsabilidades.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// SEPARACION DE RESPONSABILIDADES (SoC)
+// Aplicado a este mismo sitio web educativo
+// ============================================
+
+// RESPONSABILIDAD 1: ESTRUCTURA (HTML)
+// Los archivos .html definen QUE se muestra
+// No contienen estilos ni logica
+// Ejemplo: <article class="card">...</article>
+
+// RESPONSABILIDAD 2: PRESENTACION (CSS)
+// El archivo main.css define COMO se ve
+// No contiene estructura ni logica
+// Ejemplo: .card { box-shadow: inset ...; }
+
+// RESPONSABILIDAD 3: COMPORTAMIENTO (JavaScript)
+// Los archivos .js definen QUE HACE la pagina
+// No contienen estructura ni estilos
+
+// RESPONSABILIDAD 4: MODULARIZACION (Archivos separados)
+// navigation.js -> Solo maneja la navegacion
+// codeCanvas.js -> Solo renderiza bloques de codigo
+// interactions.js -> Solo maneja acordeones y tabs
+// diagrams.js -> Solo dibuja diagramas
+
+// Cada archivo tiene UNA responsabilidad clara.
+// Si necesitamos cambiar la navegacion, solo 
+// tocamos navigation.js. Los demas no se afectan.
+
+// Este principio se resume en:
+// "Cada pieza del sistema debe tener una y solo
+//  una razon para cambiar."
+// -- Robert C. Martin (Principio de Responsabilidad Unica)
+                </script>
+            </div>
+        </section>
+
+        <!-- Principio 5: Resumen con tabla -->
+        <section class="content-section">
+            <h2 class="content-section__title">Resumen de Principios</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Principio</th>
+                        <th>Objetivo</th>
+                        <th>Metrica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-cyan">Bajo Acoplamiento</td>
+                        <td>Minimizar dependencias entre modulos</td>
+                        <td>Menos conexiones entre componentes = mejor</td>
+                    </tr>
+                    <tr>
+                        <td class="text-purple">Alta Cohesion</td>
+                        <td>Maximizar la relacion interna de un modulo</td>
+                        <td>Funciones mas relacionadas dentro del modulo = mejor</td>
+                    </tr>
+                    <tr>
+                        <td class="text-green">Abstraccion</td>
+                        <td>Ocultar detalles innecesarios</td>
+                        <td>Menos detalles expuestos entre capas = mejor</td>
+                    </tr>
+                    <tr>
+                        <td class="text-orange">Separacion de Responsabilidades</td>
+                        <td>Una responsabilidad por modulo</td>
+                        <td>Menos razones para cambiar un modulo = mejor</td>
+                    </tr>
+                    <tr>
+                        <td class="text-pink">Ocultamiento de Informacion</td>
+                        <td>Proteger detalles de implementacion</td>
+                        <td>Interfaces publicas minimas y estables = mejor</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Ejercicio Practico</p>
+                <p class="info-panel__text">
+                    Analizar niveles de acoplamiento en disenos dados.
+                    Tome el codigo de ejemplo de "alto acoplamiento" y "bajo acoplamiento"
+                    presentados en esta pagina. Identifique cada punto de dependencia y
+                    clasifiquelo segun la tabla de niveles de acoplamiento. Justifique por
+                    que el segundo ejemplo es superior al primero desde el punto de vista
+                    arquitectonico.
+                </p>
+            </div>
+            <div class="info-panel info-panel--purple" style="margin-top: 1rem;">
+                <p class="info-panel__title">Ejercicio de Reflexion</p>
+                <p class="info-panel__text">
+                    Examine la estructura de archivos de este mismo sitio web educativo.
+                    Identifique como se aplican los principios de cohesion, acoplamiento y
+                    separacion de responsabilidades en la organizacion de los archivos HTML,
+                    CSS y JavaScript. Sugiera al menos una mejora arquitectonica.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 2.5 - Principios de la Arquitectura en Capas</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

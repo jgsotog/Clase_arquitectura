@@ -1,0 +1,1004 @@
+/* ============================================================
+ * ARCHIVO: css/main.css
+ * DESCRIPCION: Hoja de estilos principal del sitio.
+ * ARQUITECTURA: Separacion de presentacion (CSS) del contenido (HTML)
+ *               y la logica (JS). Este archivo centraliza todos los
+ *               estilos para mantener consistencia visual.
+ * PATRON: Metodologia modular — variables CSS en :root para facil
+ *         mantenimiento y tematizacion.
+ * ============================================================ */
+
+/* ----------------------------------------------------------
+ * SECCION 1: VARIABLES GLOBALES (Custom Properties)
+ * Razon: Centralizar colores, espaciados y efectos permite
+ * modificar todo el tema desde un solo lugar.
+ * ---------------------------------------------------------- */
+:root {
+    /* --- Paleta Futurista Intermedia --- */
+    --bg-primary: #222276;
+    --bg-secondary: #1a1a3a;
+    --bg-surface: #22224a;
+    --bg-surface-alt: #2a2a58;
+    --bg-card: #1e1e42;
+
+    /* --- Acentos --- */
+    --accent-cyan: #22d3ee;
+    --accent-purple: #8b5cf6;
+    --accent-green: #34d399;
+    --accent-pink: #f472b6;
+    --accent-orange: #fb923c;
+
+    /* --- Texto --- */
+    --text-primary: #e8eaff;
+    --text-secondary: #a0a4cc;
+    --text-muted: #6e72a0;
+    --text-code: #cdf4ff;
+
+    /* --- Bordes --- */
+    --border-color: #2e2e66;
+    --border-glow: rgba(34, 211, 238, 0.18);
+
+    /* --- Efecto Hundido (Inset Shadows) --- */
+    --inset-deep: inset 0 3px 12px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 3px rgba(0, 0, 0, 0.35),
+                  inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+
+    --inset-medium: inset 0 2px 8px rgba(0, 0, 0, 0.35),
+                    inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+
+    --inset-light: inset 0 1px 4px rgba(0, 0, 0, 0.28);
+
+    --inset-glow-cyan: inset 0 0 20px rgba(34, 211, 238, 0.07),
+                       inset 0 3px 12px rgba(0, 0, 0, 0.5);
+
+    --inset-glow-purple: inset 0 0 20px rgba(139, 92, 246, 0.07),
+                         inset 0 3px 12px rgba(0, 0, 0, 0.5);
+
+    /* --- Tipografia --- */
+    --font-main: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+
+    /* --- Espaciado --- */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+
+    /* --- Radios --- */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    /* --- Transiciones --- */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 2: RESET Y BASE
+ * Razon: Normalizar estilos entre navegadores para que la
+ * presentacion sea consistente.
+ * ---------------------------------------------------------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- Fondo con patron sutil de grilla --- */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-cyan);
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-green);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 3: BARRA DE NAVEGACION
+ * Componente: Navbar superior fija
+ * Efecto: Fondo con efecto hundido y borde inferior brillante
+ * ---------------------------------------------------------- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--inset-medium);
+    padding: 0 var(--space-xl);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--accent-cyan),
+        var(--accent-purple),
+        transparent);
+    opacity: 0.4;
+}
+
+.navbar__brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+.navbar__brand span {
+    color: var(--accent-cyan);
+}
+
+.navbar__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+}
+
+.navbar__link {
+    color: var(--text-secondary);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    position: relative;
+    white-space: nowrap;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+    color: var(--accent-cyan);
+    background: rgba(0, 212, 255, 0.06);
+    box-shadow: var(--inset-light);
+}
+
+.navbar__link--active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--accent-cyan);
+    border-radius: 1px;
+}
+
+/* --- Dropdown de navegacion --- */
+.navbar__dropdown {
+    position: relative;
+}
+
+.navbar__dropdown-trigger {
+    color: var(--text-secondary);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    background: none;
+    border: 1px solid transparent;
+    font-family: var(--font-main);
+    white-space: nowrap;
+}
+
+.navbar__dropdown-trigger:hover,
+.navbar__dropdown--open .navbar__dropdown-trigger {
+    color: var(--accent-cyan);
+    background: rgba(34, 211, 238, 0.06);
+    border-color: var(--border-color);
+    box-shadow: var(--inset-light);
+}
+
+.navbar__dropdown-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 240px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--inset-deep);
+    padding: var(--space-sm);
+    z-index: 1001;
+    animation: fadeIn 150ms ease;
+}
+
+.navbar__dropdown--open .navbar__dropdown-content {
+    display: block;
+}
+
+.navbar__dropdown-content .navbar__link {
+    display: block;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.82rem;
+    border-radius: var(--radius-sm);
+}
+
+.navbar__dropdown-content .navbar__link:hover {
+    background: rgba(34, 211, 238, 0.08);
+}
+
+/* --- Menu hamburguesa (responsivo) --- */
+.navbar__toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    box-shadow: var(--inset-light);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 4: LAYOUT PRINCIPAL
+ * Estructura: Contenido centrado con margen superior 
+ * para compensar la navbar fija.
+ * ---------------------------------------------------------- */
+.main-content {
+    position: relative;
+    z-index: 1;
+    margin-top: 64px;
+    padding: var(--space-2xl) var(--space-xl);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 5: HERO / CABECERA DE PAGINA
+ * Componente: Banner principal con titulo y descripcion
+ * ---------------------------------------------------------- */
+.hero {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.hero__title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero__subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.hero__badge {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: var(--inset-light);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 6: TARJETAS (CARDS)
+ * Componente: Contenedores con efecto hundido para temas.
+ * El efecto inset simula profundidad sin sombreado externo.
+ * ---------------------------------------------------------- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--inset-deep);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.card:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card__number {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--inset-medium);
+}
+
+.card__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+}
+
+.card__description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    line-height: 1.7;
+}
+
+.card__link {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    letter-spacing: 0.5px;
+    box-shadow: var(--inset-light);
+    transition: all var(--transition-normal);
+}
+
+.card__link:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 7: PAGINA DE TEMA (Contenido de cada tema)
+ * Layout para las sub-paginas individuales.
+ * ---------------------------------------------------------- */
+.topic-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.topic-header__number {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: var(--inset-light);
+    margin-bottom: var(--space-md);
+}
+
+.topic-header__title {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    line-height: 1.3;
+}
+
+.topic-header__description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    line-height: 1.8;
+}
+
+/* --- Secciones de contenido --- */
+.content-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.content-section__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-md);
+    border-left: 3px solid var(--accent-cyan);
+}
+
+.content-section__text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 8: BLOQUE DE CODIGO (Code Canvas)
+ * Componente: Simulacion de editor de codigo con 
+ * resaltado de sintaxis basico y efecto hundido profundo.
+ * ---------------------------------------------------------- */
+.code-canvas {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--inset-deep);
+    overflow: hidden;
+    margin: var(--space-lg) 0;
+}
+
+.code-canvas__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--inset-light);
+}
+
+.code-canvas__dots {
+    display: flex;
+    gap: 6px;
+}
+
+.code-canvas__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: var(--inset-light);
+}
+
+.code-canvas__dot--red { background: #ff5f57; }
+.code-canvas__dot--yellow { background: #ffbd2e; }
+.code-canvas__dot--green { background: #28c840; }
+
+.code-canvas__filename {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.code-canvas__lang {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-purple);
+    padding: 2px 8px;
+    background: var(--bg-surface);
+    border-radius: 4px;
+    box-shadow: var(--inset-light);
+}
+
+.code-canvas__body {
+    padding: var(--space-lg);
+    overflow-x: auto;
+}
+
+.code-canvas__body pre {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text-code);
+    white-space: pre;
+    tab-size: 4;
+}
+
+/* --- Resaltado de sintaxis basico --- */
+.code-canvas__body .kw { color: var(--accent-purple); font-weight: 600; }
+.code-canvas__body .fn { color: #dcdcaa; }
+.code-canvas__body .str { color: var(--accent-green); }
+.code-canvas__body .cm { color: var(--text-muted); font-style: italic; }
+.code-canvas__body .tp { color: var(--accent-cyan); }
+.code-canvas__body .num { color: var(--accent-orange); }
+.code-canvas__body .op { color: #d4d4d4; }
+.code-canvas__body .dec { color: var(--accent-pink); }
+
+/* --- Numeros de linea --- */
+.code-canvas__lines {
+    display: flex;
+}
+
+.code-canvas__line-numbers {
+    padding-right: var(--space-md);
+    margin-right: var(--space-md);
+    border-right: 1px solid var(--border-color);
+    text-align: right;
+    user-select: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.code-canvas__code {
+    flex: 1;
+    overflow-x: auto;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 9: DIAGRAMA INTERACTIVO (Canvas Visual)
+ * Contenedor para diagramas SVG/Canvas que muestran
+ * arquitecturas visualmente.
+ * ---------------------------------------------------------- */
+.diagram-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--inset-glow-cyan);
+    padding: var(--space-xl);
+    margin: var(--space-lg) 0;
+    position: relative;
+    min-height: 300px;
+}
+
+.diagram-container__title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-lg);
+}
+
+.diagram-container canvas {
+    width: 100%;
+    display: block;
+    border-radius: var(--radius-sm);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 10: PANEL DE INFORMACION
+ * Componente: Cajas informativas con variantes de color.
+ * ---------------------------------------------------------- */
+.info-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin: var(--space-lg) 0;
+    box-shadow: var(--inset-medium);
+    position: relative;
+    padding-left: calc(var(--space-lg) + 4px);
+}
+
+.info-panel::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.info-panel--cyan::before { background: var(--accent-cyan); }
+.info-panel--purple::before { background: var(--accent-purple); }
+.info-panel--green::before { background: var(--accent-green); }
+.info-panel--pink::before { background: var(--accent-pink); }
+.info-panel--orange::before { background: var(--accent-orange); }
+
+.info-panel__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.info-panel__text {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 11: LISTA INTERACTIVA (Acordeon)
+ * Componente: Secciones expandibles / colapsables.
+ * ---------------------------------------------------------- */
+.accordion {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: var(--space-lg) 0;
+}
+
+.accordion__item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accordion__item:last-child {
+    border-bottom: none;
+}
+
+.accordion__trigger {
+    width: 100%;
+    background: var(--bg-surface);
+    border: none;
+    padding: var(--space-md) var(--space-lg);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition-fast);
+    box-shadow: var(--inset-light);
+}
+
+.accordion__trigger:hover {
+    background: var(--bg-surface-alt);
+    color: var(--accent-cyan);
+}
+
+.accordion__trigger::after {
+    content: '+';
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    transition: transform var(--transition-normal);
+}
+
+.accordion__item--open .accordion__trigger::after {
+    content: '-';
+}
+
+.accordion__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms ease;
+    background: var(--bg-card);
+}
+
+.accordion__item--open .accordion__content {
+    max-height: 1200px;
+}
+
+.accordion__body {
+    padding: var(--space-lg);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 12: TABS (Pestanas)
+ * Componente: Navegacion por pestanas dentro de una pagina.
+ * ---------------------------------------------------------- */
+.tabs {
+    margin: var(--space-lg) 0;
+}
+
+.tabs__nav {
+    display: flex;
+    gap: 2px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: var(--space-xs);
+    box-shadow: var(--inset-light);
+}
+
+.tabs__button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-muted);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.tabs__button:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.tabs__button--active {
+    color: var(--accent-cyan);
+    background: var(--bg-surface);
+    box-shadow: var(--inset-light);
+}
+
+.tabs__panel {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: var(--space-xl);
+    box-shadow: var(--inset-medium);
+}
+
+.tabs__panel--active {
+    display: block;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 13: TABLA DE COMPARACION
+ * ---------------------------------------------------------- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-lg) 0;
+    font-size: 0.88rem;
+}
+
+.data-table thead {
+    background: var(--bg-surface);
+    box-shadow: var(--inset-light);
+}
+
+.data-table th {
+    padding: var(--space-md);
+    text-align: left;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    border-bottom: 2px solid var(--border-color);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.data-table tr:hover td {
+    background: rgba(0, 212, 255, 0.03);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 14: PIE DE PAGINA (Footer)
+ * ---------------------------------------------------------- */
+.footer {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--space-2xl);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    box-shadow: var(--inset-light);
+    background: var(--bg-secondary);
+}
+
+.footer__line {
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--accent-purple),
+        var(--accent-cyan),
+        transparent);
+    opacity: 0.3;
+    margin-bottom: var(--space-lg);
+}
+
+/* ----------------------------------------------------------
+ * SECCION 15: UTILIDADES
+ * Clases de utilidad reutilizables.
+ * ---------------------------------------------------------- */
+.text-cyan { color: var(--accent-cyan); }
+.text-purple { color: var(--accent-purple); }
+.text-green { color: var(--accent-green); }
+.text-pink { color: var(--accent-pink); }
+.text-orange { color: var(--accent-orange); }
+.text-muted { color: var(--text-muted); }
+
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* ----------------------------------------------------------
+ * SECCION 16: ANIMACIONES
+ * ---------------------------------------------------------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-in {
+    animation: fadeInUp 500ms ease forwards;
+    opacity: 0;
+}
+
+.animate-in:nth-child(2) { animation-delay: 100ms; }
+.animate-in:nth-child(3) { animation-delay: 200ms; }
+.animate-in:nth-child(4) { animation-delay: 300ms; }
+.animate-in:nth-child(5) { animation-delay: 400ms; }
+
+/* ----------------------------------------------------------
+ * SECCION 17: RESPONSIVE
+ * Adaptacion para dispositivos moviles y tabletas.
+ * ---------------------------------------------------------- */
+@media (max-width: 900px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content {
+        padding: var(--space-lg) var(--space-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar__menu {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        flex-direction: column;
+        padding: var(--space-md);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--inset-deep);
+    }
+
+    .navbar__menu--open {
+        display: flex;
+    }
+
+    .navbar__toggle {
+        display: block;
+    }
+
+    .navbar__link {
+        padding: var(--space-md);
+        width: 100%;
+    }
+
+    .navbar__dropdown {
+        width: 100%;
+    }
+
+    .navbar__dropdown-trigger {
+        width: 100%;
+        text-align: left;
+        padding: var(--space-md);
+    }
+
+    .navbar__dropdown-content {
+        position: static;
+        border: none;
+        padding-left: var(--space-lg);
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .hero__title {
+        font-size: 1.6rem;
+    }
+
+    .tabs__nav {
+        flex-direction: column;
+    }
+
+    .code-canvas__body {
+        padding: var(--space-md);
+    }
+
+    .code-canvas__body pre {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: var(--space-lg) var(--space-sm);
+    }
+
+    .card {
+        padding: var(--space-lg);
+    }
+}

@@ -1,0 +1,347 @@
+<!-- ============================================================
+     ARCHIVO: pages/flujos-datos.html
+     TEMA: 2.1 - Estilo de Flujos de Datos: Tuberias y Filtros
+     
+     COMENTARIO ARQUITECTONICO:
+     Esta pagina demuestra el patron Pipe and Filter (Tuberia y Filtro).
+     En este patron, los datos fluyen a traves de una secuencia de
+     componentes de procesamiento (filtros), conectados por canales
+     (tuberias). Cada filtro transforma los datos y los pasa al siguiente.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.1 Flujos de Datos - Tuberias y Filtros</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <!-- NAVEGACION GLOBAL -->
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="../criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="../criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="../criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="../criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="flujos-datos.html" class="navbar__link navbar__link--active">2.1 Flujos de Datos</a>
+                    <a href="centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- CABECERA DEL TEMA -->
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 2.1</span>
+            <h1 class="topic-header__title">Estilo de Flujos de Datos: Tuberias y Filtros</h1>
+            <p class="topic-header__description">
+                El estilo arquitectonico de flujos de datos organiza un sistema como una serie
+                de transformaciones sobre datos de entrada. Los datos fluyen a traves de tuberias
+                (pipes) que conectan filtros (filters), donde cada filtro realiza una transformacion
+                independiente.
+            </p>
+        </header>
+
+        <!-- SECCION: Concepto Fundamental -->
+        <section class="content-section">
+            <h2 class="content-section__title">Concepto Fundamental</h2>
+            <p class="content-section__text">
+                En el patron de tuberias y filtros, el sistema se descompone en una serie de
+                componentes de procesamiento secuencial. Cada componente (filtro) tiene un conjunto
+                de entradas y salidas. Un filtro lee flujos de datos en sus entradas y produce
+                flujos de datos en sus salidas, aplicando una transformacion local e incremental
+                a los datos de entrada.
+            </p>
+            <p class="content-section__text">
+                Las tuberias son los conectores que transmiten las salidas de un filtro hacia
+                las entradas del siguiente. Este patron permite reutilizar filtros en diferentes
+                configuraciones y facilita la modificacion del sistema agregando, quitando
+                o reordenando filtros.
+            </p>
+        </section>
+
+        <!-- SECCION: Diagrama Interactivo -->
+        <section class="content-section">
+            <h2 class="content-section__title">Diagrama del Patron</h2>
+            <div class="diagram-container">
+                <p class="diagram-container__title">Diagrama Interactivo - Tuberia y Filtros</p>
+                <!-- Canvas que sera dibujado por diagrams.js -->
+                <canvas id="diagram-pipe-filter" data-diagram="pipeAndFilter" style="width: 100%;"></canvas>
+            </div>
+        </section>
+
+        <!-- SECCION: Componentes del Patron -->
+        <section class="content-section">
+            <h2 class="content-section__title">Componentes del Patron</h2>
+
+            <div class="accordion">
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Filtro (Filter)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>Un filtro es una unidad de procesamiento independiente que transforma datos.
+                            Cada filtro opera de forma aislada: no conoce la identidad ni la existencia
+                            de otros filtros en la cadena. Solo sabe que recibe datos de entrada y debe
+                            producir datos de salida.</p>
+                            <br>
+                            <p><strong>Caracteristicas clave:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Procesamiento independiente y sin estado compartido</li>
+                                <li>Entrada y salida bien definidas</li>
+                                <li>Puede funcionar de manera incremental (no necesita toda la entrada)</li>
+                                <li>Reutilizable en diferentes cadenas de procesamiento</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Tuberia (Pipe)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>La tuberia es el conector que transporta datos entre filtros. Actua como
+                            un canal de comunicacion unidireccional. En sistemas Unix, este concepto se
+                            materializa con el operador | (pipe) en la linea de comandos.</p>
+                            <br>
+                            <p><strong>Caracteristicas clave:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Transmision unidireccional de datos</li>
+                                <li>Puede incluir buffering para desacoplar velocidades</li>
+                                <li>No transforma los datos, solo los transporta</li>
+                                <li>Define la topologia del flujo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Fuente de Datos (Data Source)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>El origen de los datos que alimentan la cadena de filtros. Puede ser un archivo,
+                            un flujo de red, un sensor, una base de datos o cualquier componente que
+                            genere datos para ser procesados.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Sumidero (Data Sink)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <p>El destino final de los datos procesados. Es el punto donde se recolectan
+                            los resultados de toda la cadena de transformaciones. Puede ser una pantalla,
+                            un archivo de salida, una base de datos o un sistema externo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCION: Ejemplo de Codigo -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo Practico en Codigo</h2>
+            <p class="content-section__text">
+                El siguiente ejemplo implementa un sistema de tuberias y filtros en JavaScript.
+                Cada funcion actua como un filtro independiente que transforma los datos.
+                La funcion pipeline los conecta secuencialmente.
+            </p>
+
+            <div id="code-pipe-filter" data-code-block data-filename="pipeAndFilter.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// PATRON: Tuberia y Filtros (Pipe and Filter)
+// Cada funcion es un FILTRO independiente
+// La funcion pipeline actua como la TUBERIA
+// ============================================
+
+// FILTRO 1: Limpia espacios en blanco extra
+function filtroLimpiarEspacios(datos) {
+    return datos.map(function(texto) {
+        return texto.trim().replace(/\s+/g, ' ');
+    });
+}
+
+// FILTRO 2: Convierte a minusculas
+function filtroMinusculas(datos) {
+    return datos.map(function(texto) {
+        return texto.toLowerCase();
+    });
+}
+
+// FILTRO 3: Elimina caracteres especiales
+function filtroEliminarEspeciales(datos) {
+    return datos.map(function(texto) {
+        return texto.replace(/[^a-z0-9\s]/g, '');
+    });
+}
+
+// FILTRO 4: Divide en palabras unicas
+function filtroPalabrasUnicas(datos) {
+    const todas = datos.join(' ').split(' ');
+    return [...new Set(todas)];
+}
+
+// TUBERIA: Conecta los filtros en secuencia
+function pipeline(datosIniciales, ...filtros) {
+    return filtros.reduce(function(datos, filtro) {
+        console.log('Aplicando filtro:', filtro.name);
+        return filtro(datos);
+    }, datosIniciales);
+}
+
+// USO: Datos fluyen a traves de la cadena
+const textosCrudos = [
+    '  Hola   MUNDO  ',
+    'Arquitectura!! de Software##',
+    'PATRON de   Tuberias'
+];
+
+const resultado = pipeline(
+    textosCrudos,
+    filtroLimpiarEspacios,
+    filtroMinusculas,
+    filtroEliminarEspeciales,
+    filtroPalabrasUnicas
+);
+
+console.log('Resultado:', resultado);
+// ["hola", "mundo", "arquitectura", "de", ...]
+                </script>
+            </div>
+        </section>
+
+        <!-- SECCION: Ejemplo analogia Unix -->
+        <section class="content-section">
+            <h2 class="content-section__title">Analogia con la Linea de Comandos Unix</h2>
+            <p class="content-section__text">
+                El sistema operativo Unix es el ejemplo clasico del patron tuberia y filtros.
+                Cada comando es un filtro, y el operador | es la tuberia.
+            </p>
+
+            <div id="code-unix-pipe" data-code-block data-filename="ejemplo-unix.sh" data-language="javascript">
+                <script type="text/plain">
+# Ejemplo clasico de Pipe and Filter en Unix
+# Cada comando es un FILTRO independiente
+# El simbolo | es la TUBERIA que los conecta
+
+# Cadena de procesamiento:
+# 1. cat     -> Lee el archivo (Fuente de Datos)
+# 2. grep    -> Filtra lineas que contienen "error"
+# 3. sort    -> Ordena las lineas alfabeticamente
+# 4. uniq    -> Elimina duplicados consecutivos
+# 5. wc -l   -> Cuenta las lineas resultantes (Sumidero)
+
+cat servidor.log | grep "error" | sort | uniq | wc -l
+
+# Cada comando:
+#   - No conoce al anterior ni al siguiente
+#   - Tiene entrada estandar (stdin) y salida estandar (stdout)
+#   - Puede reutilizarse en cualquier otra cadena
+#   - Procesa los datos de forma incremental
+                </script>
+            </div>
+        </section>
+
+        <!-- SECCION: Ventajas y Desventajas -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ventajas y Desventajas</h2>
+
+            <div class="tabs">
+                <div class="tabs__nav">
+                    <button class="tabs__button tabs__button--active" data-tab="ventajas">Ventajas</button>
+                    <button class="tabs__button" data-tab="desventajas">Desventajas</button>
+                    <button class="tabs__button" data-tab="cuando-usar">Cuando Usar</button>
+                </div>
+                <div class="tabs__panel tabs__panel--active" data-tab-panel="ventajas">
+                    <div class="info-panel info-panel--green">
+                        <p class="info-panel__title">Reutilizacion de componentes</p>
+                        <p class="info-panel__text">Los filtros se pueden reutilizar en diferentes cadenas de procesamiento sin modificaciones.</p>
+                    </div>
+                    <div class="info-panel info-panel--green">
+                        <p class="info-panel__title">Facilidad de mantenimiento</p>
+                        <p class="info-panel__text">Se pueden agregar, quitar o reordenar filtros sin afectar a los demas componentes.</p>
+                    </div>
+                    <div class="info-panel info-panel--green">
+                        <p class="info-panel__title">Procesamiento concurrente</p>
+                        <p class="info-panel__text">Los filtros pueden ejecutarse en paralelo si el hardware lo permite, mejorando el rendimiento.</p>
+                    </div>
+                    <div class="info-panel info-panel--green">
+                        <p class="info-panel__title">Independencia de filtros</p>
+                        <p class="info-panel__text">Cada filtro opera de forma aislada, lo que facilita las pruebas unitarias y la depuracion.</p>
+                    </div>
+                </div>
+                <div class="tabs__panel" data-tab-panel="desventajas">
+                    <div class="info-panel info-panel--pink">
+                        <p class="info-panel__title">Sobrecarga por transformacion</p>
+                        <p class="info-panel__text">El costo de serializar y deserializar datos entre filtros puede ser significativo.</p>
+                    </div>
+                    <div class="info-panel info-panel--pink">
+                        <p class="info-panel__title">Dificultad en interacciones complejas</p>
+                        <p class="info-panel__text">No es adecuado para sistemas que requieren retroalimentacion o interaccion bidireccional entre componentes.</p>
+                    </div>
+                    <div class="info-panel info-panel--pink">
+                        <p class="info-panel__title">Latencia acumulada</p>
+                        <p class="info-panel__text">Si los filtros son secuenciales, la latencia total es la suma de las latencias individuales.</p>
+                    </div>
+                </div>
+                <div class="tabs__panel" data-tab-panel="cuando-usar">
+                    <div class="info-panel info-panel--cyan">
+                        <p class="info-panel__title">Procesamiento de texto y datos</p>
+                        <p class="info-panel__text">ETL (Extract, Transform, Load), compiladores, procesamiento de imagenes, audio y video.</p>
+                    </div>
+                    <div class="info-panel info-panel--cyan">
+                        <p class="info-panel__title">Flujos de trabajo lineales</p>
+                        <p class="info-panel__text">Cuando los datos siguen un camino lineal de transformaciones sin necesidad de retroalimentacion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCION: Actividad para el Estudiante -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Ejercicio Practico</p>
+                <p class="info-panel__text">
+                    Disenar diagramas de procesos con tuberias y filtros. 
+                    Identifique un proceso cotidiano (por ejemplo, el procesamiento de un pedido en linea)
+                    y represente cada paso como un filtro independiente, conectandolos mediante tuberias.
+                    Indique claramente la entrada y salida de cada filtro.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 2.1 - Estilos de Flujos de Datos</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

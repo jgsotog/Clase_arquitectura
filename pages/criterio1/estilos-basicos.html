@@ -1,0 +1,492 @@
+<!-- ============================================================
+     ARCHIVO: pages/criterio1/estilos-basicos.html
+     TEMA: 1.4 - Estilos Arquitectonicos Basicos
+     
+     COMENTARIO ARQUITECTONICO:
+     Los estilos arquitectonicos basicos son patrones recurrentes
+     que resuelven problemas conocidos. Conocerlos permite al
+     arquitecto tomar decisiones informadas y comunicar
+     efectivamente las soluciones.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.4 Estilos Arquitectonicos Basicos</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="estilos-basicos.html" class="navbar__link navbar__link--active">1.4 Estilos Basicos</a>
+                    <a href="ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio2/flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="../criterio2/centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="../criterio2/llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="../criterio2/arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="../criterio2/principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 1.4</span>
+            <h1 class="topic-header__title">Estilos Arquitectonicos Basicos</h1>
+            <p class="topic-header__description">
+                Un estilo arquitectonico define un conjunto de restricciones sobre la
+                forma en que se organizan los componentes y como interactuan. Cada
+                estilo resuelve un tipo de problema recurrente y tiene ventajas
+                y limitaciones especificas.
+            </p>
+        </header>
+
+        <!-- Estilo 1: Monolitico -->
+        <section class="content-section">
+            <h2 class="content-section__title">1. Estilo Monolitico</h2>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Definicion</p>
+                <p class="info-panel__text">
+                    Todo el sistema se despliega como una sola unidad. Todos los modulos
+                    comparten el mismo proceso, memoria y base de datos. Es el estilo
+                    mas simple y comun para aplicaciones pequenas y medianas.
+                </p>
+            </div>
+
+            <div id="code-monolith" data-code-block data-filename="monolitico.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// ESTILO MONOLITICO
+// Todo vive en un solo proceso/aplicacion
+// ============================================
+
+// En un monolito, todos los modulos estan en la misma app
+const app = {
+    // Modulo de Usuarios
+    usuarios: {
+        crear: function(datos) {
+            // Validacion, logica de negocio y persistencia
+            // estan en la misma aplicacion
+            var usuario = { id: Date.now(), nombre: datos.nombre };
+            app.db.guardar('usuarios', usuario);
+            app.logs.registrar('Usuario creado: ' + usuario.id);
+            return usuario;
+        },
+        buscar: function(id) {
+            return app.db.obtener('usuarios', id);
+        }
+    },
+
+    // Modulo de Pedidos (mismo proceso)
+    pedidos: {
+        crear: function(usuarioId, productos) {
+            // Puede acceder directamente a otros modulos
+            var usuario = app.usuarios.buscar(usuarioId);
+            if (!usuario) throw new Error('Usuario no existe');
+            
+            var total = productos.reduce(function(sum, p) {
+                return sum + p.precio;
+            }, 0);
+
+            var pedido = { id: Date.now(), usuario: usuario, total: total };
+            app.db.guardar('pedidos', pedido);
+            return pedido;
+        }
+    },
+
+    // Base de datos compartida
+    db: {
+        datos: {},
+        guardar: function(tabla, registro) {
+            if (!this.datos[tabla]) this.datos[tabla] = [];
+            this.datos[tabla].push(registro);
+        },
+        obtener: function(tabla, id) {
+            return (this.datos[tabla] || []).find(function(r) {
+                return r.id === id;
+            });
+        }
+    },
+
+    // Logging compartido
+    logs: {
+        registrar: function(msg) {
+            console.log('[' + new Date().toISOString() + '] ' + msg);
+        }
+    }
+};
+
+// VENTAJAS: Simple, rapido de desarrollar, facil de depurar
+// DESVENTAJAS: Dificil de escalar, un fallo afecta todo
+                </script>
+            </div>
+        </section>
+
+        <!-- Estilo 2: Cliente-Servidor -->
+        <section class="content-section">
+            <h2 class="content-section__title">2. Estilo Cliente-Servidor</h2>
+
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Definicion</p>
+                <p class="info-panel__text">
+                    Separa el sistema en dos roles: el cliente (que solicita servicios)
+                    y el servidor (que los provee). La comunicacion es tipicamente
+                    via red usando protocolos como HTTP. Es el fundamento de la web.
+                </p>
+            </div>
+
+            <div id="code-client-server" data-code-block data-filename="clienteServidor.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// ESTILO CLIENTE-SERVIDOR
+// Separacion de roles: quien pide y quien sirve
+// ============================================
+
+// ----------- SERVIDOR -----------
+// Provee servicios a traves de endpoints
+const Servidor = {
+    productos: [
+        { id: 1, nombre: "Laptop", precio: 15000 },
+        { id: 2, nombre: "Mouse",  precio: 350 },
+        { id: 3, nombre: "Teclado", precio: 800 }
+    ],
+
+    // Endpoint: GET /productos
+    listarProductos: function() {
+        return {
+            status: 200,
+            body: this.productos
+        };
+    },
+
+    // Endpoint: GET /productos/:id
+    obtenerProducto: function(id) {
+        var producto = this.productos.find(function(p) {
+            return p.id === id;
+        });
+        if (!producto) return { status: 404, body: "No encontrado" };
+        return { status: 200, body: producto };
+    },
+
+    // El servidor procesa la solicitud
+    procesarSolicitud: function(metodo, ruta, params) {
+        if (metodo === 'GET' && ruta === '/productos') {
+            return this.listarProductos();
+        }
+        if (metodo === 'GET' && ruta === '/productos/:id') {
+            return this.obtenerProducto(params.id);
+        }
+        return { status: 404, body: "Ruta no encontrada" };
+    }
+};
+
+// ----------- CLIENTE -----------
+// Solicita servicios al servidor
+const Cliente = {
+    // Simula una peticion HTTP
+    hacerPeticion: function(metodo, ruta, params) {
+        console.log("Cliente -> " + metodo + " " + ruta);
+        // En la realidad: fetch(), XMLHttpRequest, etc.
+        var respuesta = Servidor.procesarSolicitud(metodo, ruta, params);
+        console.log("Servidor -> Status " + respuesta.status);
+        return respuesta;
+    },
+
+    mostrarProductos: function() {
+        var resp = this.hacerPeticion('GET', '/productos', {});
+        console.log("Productos disponibles:", resp.body);
+    }
+};
+
+// EJECUCION
+Cliente.mostrarProductos();
+// Cliente -> GET /productos
+// Servidor -> Status 200
+// Productos disponibles: [...]
+                </script>
+            </div>
+        </section>
+
+        <!-- Estilo 3: Microservicios -->
+        <section class="content-section">
+            <h2 class="content-section__title">3. Estilo de Microservicios</h2>
+
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Definicion</p>
+                <p class="info-panel__text">
+                    Descompone el sistema en servicios pequenos, autonomos e independientemente
+                    desplegables. Cada microservicio tiene su propia base de datos y se
+                    comunica con los demas a traves de APIs o mensajes.
+                </p>
+            </div>
+
+            <div id="code-microservices" data-code-block data-filename="microservicios.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// ESTILO MICROSERVICIOS
+// Servicios autonomos con responsabilidad unica
+// ============================================
+
+// Servicio 1: Catalogo (puerto 3001)
+const ServicioCatalogo = {
+    nombre: "catalogo-service",
+    puerto: 3001,
+    db: [
+        { id: "P001", nombre: "Laptop", precio: 15000 },
+        { id: "P002", nombre: "Mouse", precio: 350 }
+    ],
+    obtenerProducto: function(id) {
+        return this.db.find(function(p) { return p.id === id; });
+    }
+};
+
+// Servicio 2: Inventario (puerto 3002, BD independiente)
+const ServicioInventario = {
+    nombre: "inventario-service",
+    puerto: 3002,
+    db: { "P001": 50, "P002": 200 },
+    verificarStock: function(productoId, cantidad) {
+        var disponible = this.db[productoId] || 0;
+        return disponible >= cantidad;
+    },
+    reducirStock: function(productoId, cantidad) {
+        if (this.verificarStock(productoId, cantidad)) {
+            this.db[productoId] -= cantidad;
+            return true;
+        }
+        return false;
+    }
+};
+
+// Servicio 3: Pedidos (puerto 3003, BD independiente)
+const ServicioPedidos = {
+    nombre: "pedidos-service",
+    puerto: 3003,
+    db: [],
+    // Orquesta llamadas a otros servicios
+    crearPedido: function(productoId, cantidad) {
+        // Paso 1: Consultar catalogo (HTTP a puerto 3001)
+        var producto = ServicioCatalogo.obtenerProducto(productoId);
+        if (!producto) return { error: "Producto no encontrado" };
+
+        // Paso 2: Verificar inventario (HTTP a puerto 3002)
+        var hayStock = ServicioInventario.verificarStock(productoId, cantidad);
+        if (!hayStock) return { error: "Sin stock suficiente" };
+
+        // Paso 3: Reducir inventario
+        ServicioInventario.reducirStock(productoId, cantidad);
+
+        // Paso 4: Crear pedido en su propia BD
+        var pedido = {
+            id: "ORD-" + Date.now(),
+            producto: producto.nombre,
+            cantidad: cantidad,
+            total: producto.precio * cantidad,
+            estado: "confirmado"
+        };
+        this.db.push(pedido);
+        return pedido;
+    }
+};
+
+// Cada servicio se despliega, escala y actualiza independientemente
+// VENTAJAS: Escalabilidad granular, independencia de equipos
+// DESVENTAJAS: Complejidad operacional, consistencia eventual
+                </script>
+            </div>
+        </section>
+
+        <!-- Estilo 4: Basado en Eventos -->
+        <section class="content-section">
+            <h2 class="content-section__title">4. Estilo Basado en Eventos</h2>
+
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Definicion</p>
+                <p class="info-panel__text">
+                    Los componentes se comunican emitiendo y escuchando eventos. Ningun
+                    componente necesita conocer directamente a los demas. Un bus de
+                    eventos central o distribuido gestiona la entrega de los mensajes.
+                </p>
+            </div>
+
+            <div id="code-event-driven" data-code-block data-filename="basadoEnEventos.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// ESTILO BASADO EN EVENTOS
+// Comunicacion desacoplada mediante eventos
+// ============================================
+
+// Bus de Eventos (Event Bus / Message Broker)
+const EventBus = {
+    suscriptores: {},
+
+    // Suscribirse a un tipo de evento
+    suscribir: function(evento, callback) {
+        if (!this.suscriptores[evento]) {
+            this.suscriptores[evento] = [];
+        }
+        this.suscriptores[evento].push(callback);
+        console.log("[Bus] Suscripcion registrada: " + evento);
+    },
+
+    // Publicar un evento (notifica a todos los suscriptores)
+    publicar: function(evento, datos) {
+        console.log("[Bus] Evento emitido: " + evento);
+        var listeners = this.suscriptores[evento] || [];
+        listeners.forEach(function(callback) {
+            callback(datos);
+        });
+    }
+};
+
+// ---------- COMPONENTES DESACOPLADOS ----------
+
+// Componente: Procesador de Pagos
+// No conoce a los demas componentes
+EventBus.suscribir("PEDIDO_CREADO", function(datos) {
+    console.log("[Pagos] Procesando cobro de $" + datos.total);
+    // Simula procesamiento...
+    EventBus.publicar("PAGO_CONFIRMADO", {
+        pedidoId: datos.pedidoId,
+        monto: datos.total
+    });
+});
+
+// Componente: Almacen
+// Reacciona al pago, no al pedido directamente
+EventBus.suscribir("PAGO_CONFIRMADO", function(datos) {
+    console.log("[Almacen] Preparando envio para pedido " + datos.pedidoId);
+    EventBus.publicar("ENVIO_PREPARADO", { pedidoId: datos.pedidoId });
+});
+
+// Componente: Notificaciones
+// Escucha multiples eventos independientemente
+EventBus.suscribir("PEDIDO_CREADO", function(datos) {
+    console.log("[Email] Enviando confirmacion al cliente");
+});
+EventBus.suscribir("ENVIO_PREPARADO", function(datos) {
+    console.log("[Email] Enviando tracking al cliente");
+});
+
+// ----- DISPARO INICIAL -----
+EventBus.publicar("PEDIDO_CREADO", {
+    pedidoId: "ORD-001",
+    total: 15350,
+    cliente: "Juan"
+});
+
+// SALIDA:
+// [Bus] Evento emitido: PEDIDO_CREADO
+// [Pagos] Procesando cobro de $15350
+// [Bus] Evento emitido: PAGO_CONFIRMADO
+// [Almacen] Preparando envio para pedido ORD-001
+// [Bus] Evento emitido: ENVIO_PREPARADO
+// [Email] Enviando confirmacion al cliente
+// [Email] Enviando tracking al cliente
+                </script>
+            </div>
+        </section>
+
+        <!-- Tabla Resumen -->
+        <section class="content-section">
+            <h2 class="content-section__title">Tabla Resumen de Estilos</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Estilo</th>
+                        <th>Escalabilidad</th>
+                        <th>Complejidad</th>
+                        <th>Caso de Uso Ideal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monolitico</td>
+                        <td>Baja</td>
+                        <td>Baja</td>
+                        <td>MVPs, apps pequenas, prototipado</td>
+                    </tr>
+                    <tr>
+                        <td>Cliente-Servidor</td>
+                        <td>Media</td>
+                        <td>Baja-Media</td>
+                        <td>Aplicaciones web, APIs REST</td>
+                    </tr>
+                    <tr>
+                        <td>Capas (N-Tier)</td>
+                        <td>Media</td>
+                        <td>Media</td>
+                        <td>Sistemas empresariales, ERP</td>
+                    </tr>
+                    <tr>
+                        <td>Microservicios</td>
+                        <td>Alta</td>
+                        <td>Alta</td>
+                        <td>Plataformas grandes, equipos multiples</td>
+                    </tr>
+                    <tr>
+                        <td>Basado en Eventos</td>
+                        <td>Alta</td>
+                        <td>Alta</td>
+                        <td>Sistemas reactivos, IoT, streaming</td>
+                    </tr>
+                    <tr>
+                        <td>Pipe & Filter</td>
+                        <td>Media-Alta</td>
+                        <td>Baja-Media</td>
+                        <td>Procesamiento de datos, ETL, compiladores</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Reconocer Estilos en Sistemas Existentes</p>
+                <p class="info-panel__text">
+                    Analice tres sistemas de software reales que use cotidianamente
+                    (ejemplos: WhatsApp, Netflix, un sistema bancario). Para cada uno,
+                    identifique que estilo arquitectonico utiliza, justifique su respuesta
+                    y dibuje un diagrama simplificado de sus componentes principales.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 1.4 - Estilos Arquitectonicos Basicos</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

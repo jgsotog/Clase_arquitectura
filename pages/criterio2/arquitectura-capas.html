@@ -1,0 +1,405 @@
+<!-- ============================================================
+     ARCHIVO: pages/arquitectura-capas.html
+     TEMA: 2.4 - Arquitectura en Capas
+     
+     COMENTARIO ARQUITECTONICO:
+     La arquitectura en capas (Layered Architecture) es uno de los
+     patrones mas utilizados en sistemas empresariales. Organiza el
+     sistema en capas horizontales, donde cada capa tiene una
+     responsabilidad especifica y solo se comunica con la capa
+     inmediatamente inferior.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.4 Arquitectura en Capas</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="../criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="../criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="../criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="../criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="centrados-datos.html" class="navbar__link">2.2 Centrados en Datos</a>
+                    <a href="llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="arquitectura-capas.html" class="navbar__link navbar__link--active">2.4 Arq. en Capas</a>
+                    <a href="principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 2.4</span>
+            <h1 class="topic-header__title">Arquitectura en Capas</h1>
+            <p class="topic-header__description">
+                La arquitectura en capas organiza los componentes del sistema en grupos horizontales
+                (capas), donde cada capa tiene una responsabilidad bien definida. Las capas superiores
+                dependen de las inferiores, pero nunca al reves. Este patron promueve la separacion
+                de responsabilidades y facilita el mantenimiento del sistema.
+            </p>
+        </header>
+
+        <!-- Diagrama -->
+        <section class="content-section">
+            <h2 class="content-section__title">Diagrama de Arquitectura en Capas</h2>
+            <div class="diagram-container">
+                <p class="diagram-container__title">Diagrama - Arquitectura de 4 Capas (N-Tier)</p>
+                <canvas id="diagram-layered" data-diagram="layered" style="width: 100%;"></canvas>
+            </div>
+        </section>
+
+        <!-- Las 4 capas clasicas -->
+        <section class="content-section">
+            <h2 class="content-section__title">Las Cuatro Capas Clasicas</h2>
+
+            <div class="accordion">
+                <div class="accordion__item accordion__item--open">
+                    <button class="accordion__trigger">Capa de Presentacion (UI)</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <div class="info-panel info-panel--cyan">
+                                <p class="info-panel__title">Responsabilidad</p>
+                                <p class="info-panel__text">
+                                    Maneja la interfaz de usuario y la interaccion con el usuario final.
+                                    Muestra informacion y recibe entradas. No contiene logica de negocio.
+                                </p>
+                            </div>
+                            <p><strong>Componentes tipicos:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Paginas HTML / Plantillas</li>
+                                <li>Controladores de vista</li>
+                                <li>Formularios y validacion visual</li>
+                                <li>Componentes de interfaz grafica</li>
+                            </ul>
+                            <p style="margin-top: 1rem;"><strong>Regla:</strong> Solo se comunica con la capa de logica de negocio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Capa de Logica de Negocio</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <div class="info-panel info-panel--purple">
+                                <p class="info-panel__title">Responsabilidad</p>
+                                <p class="info-panel__text">
+                                    Contiene las reglas de negocio y la logica central de la aplicacion.
+                                    Procesa las solicitudes de la capa de presentacion y coordina las
+                                    operaciones con la capa de datos.
+                                </p>
+                            </div>
+                            <p><strong>Componentes tipicos:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Servicios de dominio</li>
+                                <li>Reglas de validacion de negocio</li>
+                                <li>Calculos y transformaciones</li>
+                                <li>Orquestacion de procesos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Capa de Acceso a Datos</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <div class="info-panel info-panel--green">
+                                <p class="info-panel__title">Responsabilidad</p>
+                                <p class="info-panel__text">
+                                    Abstrae el acceso a los datos persistentes. Traduce las operaciones
+                                    de la logica de negocio en consultas al almacen de datos (SQL, API, archivos).
+                                </p>
+                            </div>
+                            <p><strong>Componentes tipicos:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Repositorios (Patron Repository)</li>
+                                <li>ORM (Object-Relational Mapping)</li>
+                                <li>Objetos de acceso a datos (DAO)</li>
+                                <li>Adaptadores de APIs externas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion__item">
+                    <button class="accordion__trigger">Capa de Base de Datos</button>
+                    <div class="accordion__content">
+                        <div class="accordion__body">
+                            <div class="info-panel info-panel--orange">
+                                <p class="info-panel__title">Responsabilidad</p>
+                                <p class="info-panel__text">
+                                    Almacena y gestiona los datos persistentes del sistema.
+                                    Proporciona mecanismos de consulta, transaccion e integridad de datos.
+                                </p>
+                            </div>
+                            <p><strong>Componentes tipicos:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-secondary);">
+                                <li>Motor de base de datos (MySQL, PostgreSQL, MongoDB)</li>
+                                <li>Esquemas y tablas</li>
+                                <li>Procedimientos almacenados</li>
+                                <li>Indices y vistas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema de tres capas con codigo -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Sistema de Tres Capas</h2>
+            <p class="content-section__text">
+                El siguiente ejemplo implementa un sistema de gestion de productos con tres
+                capas claramente diferenciadas. Cada capa tiene su propia responsabilidad
+                y solo se comunica con la capa adyacente.
+            </p>
+
+            <div class="tabs">
+                <div class="tabs__nav">
+                    <button class="tabs__button tabs__button--active" data-tab="presentacion">Capa Presentacion</button>
+                    <button class="tabs__button" data-tab="negocio">Capa Negocio</button>
+                    <button class="tabs__button" data-tab="datos">Capa Datos</button>
+                </div>
+
+                <div class="tabs__panel tabs__panel--active" data-tab-panel="presentacion">
+                    <div id="code-layer-ui" data-code-block data-filename="presentacion/ProductoVista.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// CAPA DE PRESENTACION
+// Responsabilidad: Mostrar datos al usuario
+// y capturar sus acciones.
+// SOLO se comunica con la capa de negocio.
+// ============================================
+
+const ProductoVista = {
+    
+    // Muestra la lista de productos en pantalla
+    mostrarLista: function(productos) {
+        const contenedor = document.getElementById('lista');
+        contenedor.innerHTML = '';
+        
+        productos.forEach(function(producto) {
+            const elemento = document.createElement('div');
+            elemento.textContent = producto.nombre 
+                + ' - $' + producto.precio;
+            contenedor.appendChild(elemento);
+        });
+    },
+    
+    // Captura datos del formulario
+    obtenerDatosFormulario: function() {
+        return {
+            nombre: document.getElementById('nombre').value,
+            precio: document.getElementById('precio').value
+        };
+    },
+    
+    // Inicializa la vista
+    init: function() {
+        const boton = document.getElementById('btn-agregar');
+        boton.addEventListener('click', function() {
+            const datos = ProductoVista.obtenerDatosFormulario();
+            // LLAMADA a la capa de negocio (nunca a datos)
+            ProductoServicio.agregarProducto(datos);
+            // Actualizar la vista
+            const lista = ProductoServicio.listarProductos();
+            ProductoVista.mostrarLista(lista);
+        });
+    }
+};
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="negocio">
+                    <div id="code-layer-biz" data-code-block data-filename="negocio/ProductoServicio.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// CAPA DE LOGICA DE NEGOCIO
+// Responsabilidad: Aplicar reglas de negocio.
+// Se comunica con Presentacion (arriba) y
+// Acceso a Datos (abajo).
+// ============================================
+
+const ProductoServicio = {
+    
+    // Regla de negocio: precio minimo
+    PRECIO_MINIMO: 0.01,
+    
+    // Agrega un producto aplicando reglas de negocio
+    agregarProducto: function(datos) {
+        // Validacion de negocio (NO es validacion de UI)
+        if (!datos.nombre || datos.nombre.length < 2) {
+            throw new Error("El nombre debe tener al menos 2 caracteres");
+        }
+        
+        if (datos.precio < this.PRECIO_MINIMO) {
+            throw new Error("El precio debe ser mayor a " 
+                + this.PRECIO_MINIMO);
+        }
+        
+        // Transformacion de datos de negocio
+        const producto = {
+            id: Date.now(),
+            nombre: datos.nombre.trim(),
+            precio: parseFloat(datos.precio),
+            fechaCreacion: new Date()
+        };
+        
+        // LLAMADA a la capa de datos (nunca a la BD directa)
+        return ProductoRepositorio.guardar(producto);
+    },
+    
+    // Lista productos con logica de negocio aplicada
+    listarProductos: function() {
+        // LLAMADA a la capa de datos
+        const productos = ProductoRepositorio.obtenerTodos();
+        
+        // Logica de negocio: ordenar por nombre
+        return productos.sort(function(a, b) {
+            return a.nombre.localeCompare(b.nombre);
+        });
+    }
+};
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="datos">
+                    <div id="code-layer-data" data-code-block data-filename="datos/ProductoRepositorio.js" data-language="javascript">
+                        <script type="text/plain">
+// ============================================
+// CAPA DE ACCESO A DATOS
+// Responsabilidad: Persistir y recuperar datos.
+// Abstrae el almacen de datos real.
+// SOLO se comunica con la capa de negocio.
+// ============================================
+
+const ProductoRepositorio = {
+    
+    // Almacen de datos (podria ser una BD real)
+    _almacen: [],
+    
+    // Guarda un producto en el almacen
+    guardar: function(producto) {
+        this._almacen.push(producto);
+        console.log("[Repositorio] Producto guardado:", 
+            producto.nombre);
+        return producto;
+    },
+    
+    // Obtiene todos los productos
+    obtenerTodos: function() {
+        // Retorna una copia para proteger los datos
+        return this._almacen.slice();
+    },
+    
+    // Busca un producto por ID
+    buscarPorId: function(id) {
+        return this._almacen.find(function(p) {
+            return p.id === id;
+        }) || null;
+    },
+    
+    // Elimina un producto por ID
+    eliminar: function(id) {
+        const indice = this._almacen.findIndex(function(p) {
+            return p.id === id;
+        });
+        if (indice !== -1) {
+            this._almacen.splice(indice, 1);
+            return true;
+        }
+        return false;
+    }
+};
+
+// NOTA ARQUITECTONICA:
+// Si cambiamos de almacen en memoria a una base de datos
+// real, solo necesitamos modificar ESTA capa.
+// Las capas de negocio y presentacion NO se ven afectadas.
+// Esto demuestra el principio de "aislamiento de cambios".
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reglas clave -->
+        <section class="content-section">
+            <h2 class="content-section__title">Reglas Fundamentales</h2>
+
+            <div class="info-panel info-panel--cyan">
+                <p class="info-panel__title">Regla 1: Dependencia descendente</p>
+                <p class="info-panel__text">
+                    Las capas superiores dependen de las inferiores, nunca al reves.
+                    La capa de datos no debe conocer la existencia de la capa de presentacion.
+                </p>
+            </div>
+            <div class="info-panel info-panel--purple">
+                <p class="info-panel__title">Regla 2: Comunicacion entre adyacentes</p>
+                <p class="info-panel__text">
+                    Cada capa solo se comunica con la capa inmediatamente inferior.
+                    La capa de presentacion no debe acceder directamente a la base de datos.
+                </p>
+            </div>
+            <div class="info-panel info-panel--green">
+                <p class="info-panel__title">Regla 3: Encapsulamiento de capa</p>
+                <p class="info-panel__text">
+                    Los detalles internos de cada capa estan ocultos para las demas.
+                    Si cambiamos la implementacion de una capa, las otras no deberian verse afectadas.
+                </p>
+            </div>
+        </section>
+
+        <!-- Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Ejercicio Practico</p>
+                <p class="info-panel__text">
+                    Disenar un sistema de tres capas con responsabilidades claras.
+                    Tome un sistema real (por ejemplo, una tienda en linea) y defina
+                    que componentes pertenecen a cada capa. Dibuje el diagrama y
+                    explique por que cada componente pertenece a esa capa especifica.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 2.4 - Arquitectura en Capas</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>

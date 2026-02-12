@@ -1,0 +1,351 @@
+<!-- ============================================================
+     ARCHIVO: pages/centrados-datos.html
+     TEMA: 2.2 - Estilos Centrados en Datos
+     
+     COMENTARIO ARQUITECTONICO:
+     Los estilos centrados en datos organizan el sistema alrededor
+     de un almacen de datos compartido (repositorio). Los componentes
+     acceden y modifican este almacen central en lugar de comunicarse
+     directamente entre ellos.
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.2 Estilos Centrados en Datos</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+
+    <!-- NAVEGACION GLOBAL -->
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="navbar__brand">Arquitectura <span>de Software</span></div>
+        <button class="navbar__toggle" aria-expanded="false" aria-label="Abrir menu">|||</button>
+        <ul class="navbar__menu">
+            <li><a href="../../index.html" class="navbar__link">Inicio</a></li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 1</button>
+                <div class="navbar__dropdown-content">
+                    <a href="../criterio1/que-es-arquitectura.html" class="navbar__link">1.1 Que es Arquitectura</a>
+                    <a href="../criterio1/importancia.html" class="navbar__link">1.2 Importancia</a>
+                    <a href="../criterio1/clasificacion-modelos.html" class="navbar__link">1.3 Clasificacion de Modelos</a>
+                    <a href="../criterio1/estilos-basicos.html" class="navbar__link">1.4 Estilos Basicos</a>
+                    <a href="../criterio1/ambitos-aplicacion.html" class="navbar__link">1.5 Ambitos de Aplicacion</a>
+                </div>
+            </li>
+            <li class="navbar__dropdown">
+                <button class="navbar__dropdown-trigger">Criterio 2</button>
+                <div class="navbar__dropdown-content">
+                    <a href="flujos-datos.html" class="navbar__link">2.1 Flujos de Datos</a>
+                    <a href="centrados-datos.html" class="navbar__link navbar__link--active">2.2 Centrados en Datos</a>
+                    <a href="llamada-retorno.html" class="navbar__link">2.3 Llamada y Retorno</a>
+                    <a href="arquitectura-capas.html" class="navbar__link">2.4 Arq. en Capas</a>
+                    <a href="principios-capas.html" class="navbar__link">2.5 Principios</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- CABECERA DEL TEMA -->
+        <header class="topic-header">
+            <span class="topic-header__number">Tema 2.2</span>
+            <h1 class="topic-header__title">Estilos Centrados en Datos</h1>
+            <p class="topic-header__description">
+                Los estilos centrados en datos se caracterizan por tener un almacen de datos
+                central (repositorio) al que acceden multiples componentes independientes.
+                La comunicacion entre componentes se realiza a traves de los datos compartidos,
+                no mediante llamadas directas entre ellos.
+            </p>
+        </header>
+
+        <!-- SECCION: Tipos de Arquitectura -->
+        <section class="content-section">
+            <h2 class="content-section__title">Variantes Principales</h2>
+            <p class="content-section__text">
+                Existen dos variantes principales de arquitecturas centradas en datos, que se
+                diferencian en como se activa el procesamiento de los datos.
+            </p>
+
+            <div class="tabs">
+                <div class="tabs__nav">
+                    <button class="tabs__button tabs__button--active" data-tab="repositorio">Repositorio</button>
+                    <button class="tabs__button" data-tab="pizarron">Pizarron (Blackboard)</button>
+                    <button class="tabs__button" data-tab="comparacion">Comparacion</button>
+                </div>
+
+                <div class="tabs__panel tabs__panel--active" data-tab-panel="repositorio">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.05rem;">Estilo Repositorio</h3>
+                    <p class="content-section__text">
+                        En el estilo repositorio, los clientes (componentes) acceden al almacen de datos
+                        de forma activa. Cada cliente decide cuando leer o escribir datos.
+                        El repositorio es pasivo: solo almacena informacion y responde a solicitudes.
+                    </p>
+                    <div class="info-panel info-panel--cyan">
+                        <p class="info-panel__title">Ejemplo clasico</p>
+                        <p class="info-panel__text">
+                            Un sistema de base de datos relacional donde multiples aplicaciones
+                            (clientes) consultan y modifican los datos. La base de datos no inicia
+                            comunicacion; solo responde a las solicitudes de los clientes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="pizarron">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.05rem;">Estilo Pizarron (Blackboard)</h3>
+                    <p class="content-section__text">
+                        En el estilo pizarron, el almacen de datos tiene un rol activo. Cuando los datos
+                        cambian, el pizarron notifica a los componentes interesados. Los componentes
+                        se activan en respuesta a cambios en los datos, no por decision propia.
+                    </p>
+                    <div class="info-panel info-panel--purple">
+                        <p class="info-panel__title">Ejemplo clasico</p>
+                        <p class="info-panel__text">
+                            Sistemas de inteligencia artificial donde multiples agentes de conocimiento
+                            observan un espacio compartido. Cuando un agente modifica datos, otros
+                            agentes se activan automaticamente si los datos son relevantes para ellos.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tabs__panel" data-tab-panel="comparacion">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Repositorio</th>
+                                <th>Pizarron</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Control del flujo</td>
+                                <td>Los clientes deciden cuando acceder</td>
+                                <td>El pizarron notifica a los clientes</td>
+                            </tr>
+                            <tr>
+                                <td>Almacen de datos</td>
+                                <td>Pasivo</td>
+                                <td>Activo</td>
+                            </tr>
+                            <tr>
+                                <td>Acoplamiento</td>
+                                <td>Bajo entre clientes, medio con el almacen</td>
+                                <td>Bajo entre componentes</td>
+                            </tr>
+                            <tr>
+                                <td>Ejemplo tipico</td>
+                                <td>Base de datos relacional</td>
+                                <td>Sistemas expertos, IA</td>
+                            </tr>
+                            <tr>
+                                <td>Escalabilidad</td>
+                                <td>Limitada por el almacen central</td>
+                                <td>Mejor distribucion de carga</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCION: Diagrama -->
+        <section class="content-section">
+            <h2 class="content-section__title">Diagrama del Patron</h2>
+            <div class="diagram-container">
+                <p class="diagram-container__title">Diagrama Interactivo - Repositorio Centralizado</p>
+                <canvas id="diagram-data-centric" data-diagram="dataCentric" style="width: 100%;"></canvas>
+            </div>
+        </section>
+
+        <!-- SECCION: Ejemplo de Codigo Repositorio -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Patron Repositorio</h2>
+            <p class="content-section__text">
+                El siguiente codigo implementa un repositorio centralizado en JavaScript.
+                Varios modulos acceden al mismo almacen de datos sin conocerse entre si.
+            </p>
+
+            <div id="code-repository" data-code-block data-filename="repository.js" data-language="javascript">
+                <script type="text/plain">
+// ============================================
+// PATRON: Repositorio Centralizado
+// El DataStore es el almacen compartido.
+// Los modulos acceden a el sin conocerse.
+// ============================================
+
+// REPOSITORIO: Almacen central de datos
+const DataStore = {
+    _datos: {},
+    _suscriptores: [],
+
+    // Guardar datos en el repositorio
+    guardar: function(clave, valor) {
+        this._datos[clave] = valor;
+        console.log('[Repositorio] Guardado:', clave);
+        this._notificar(clave, valor);
+    },
+
+    // Leer datos del repositorio
+    leer: function(clave) {
+        return this._datos[clave] || null;
+    },
+
+    // Suscribirse a cambios (patron Observer)
+    suscribir: function(callback) {
+        this._suscriptores.push(callback);
+    },
+
+    // Notificar a suscriptores sobre cambios
+    _notificar: function(clave, valor) {
+        this._suscriptores.forEach(function(cb) {
+            cb(clave, valor);
+        });
+    }
+};
+
+// COMPONENTE A: Modulo de usuarios
+const ModuloUsuarios = {
+    registrar: function(nombre, email) {
+        DataStore.guardar('usuario_actual', {
+            nombre: nombre,
+            email: email,
+            fecha: new Date()
+        });
+    }
+};
+
+// COMPONENTE B: Modulo de auditoria
+const ModuloAuditoria = {
+    init: function() {
+        DataStore.suscribir(function(clave, valor) {
+            console.log('[Auditoria] Cambio detectado en:', clave);
+        });
+    }
+};
+
+// COMPONENTE C: Modulo de notificaciones
+const ModuloNotificaciones = {
+    init: function() {
+        DataStore.suscribir(function(clave, valor) {
+            if (clave === 'usuario_actual') {
+                console.log('[Notificacion] Nuevo usuario registrado');
+            }
+        });
+    }
+};
+
+// Los modulos no se conocen entre si.
+// Solo comparten el DataStore.
+ModuloAuditoria.init();
+ModuloNotificaciones.init();
+ModuloUsuarios.registrar('Ana', 'ana@ejemplo.com');
+                </script>
+            </div>
+        </section>
+
+        <!-- SECCION: Ejemplo Blackboard -->
+        <section class="content-section">
+            <h2 class="content-section__title">Ejemplo: Patron Pizarron (Blackboard)</h2>
+
+            <div id="code-blackboard" data-code-block data-filename="blackboard.py" data-language="python">
+                <script type="text/plain">
+# ============================================
+# PATRON: Pizarron (Blackboard)
+# El pizarron es ACTIVO: notifica a los
+# agentes cuando hay cambios relevantes.
+# Cada agente tiene una condicion de activacion.
+# ============================================
+
+class Pizarron:
+    """Almacen central activo que notifica a agentes."""
+    
+    def __init__(self):
+        self.datos = {}
+        self.agentes = []
+
+    def registrar_agente(self, agente):
+        self.agentes.append(agente)
+
+    def escribir(self, clave, valor):
+        self.datos[clave] = valor
+        # El pizarron ACTIVAMENTE busca agentes interesados
+        for agente in self.agentes:
+            if agente.puede_contribuir(clave):
+                agente.ejecutar(self)
+
+    def leer(self, clave):
+        return self.datos.get(clave, None)
+
+
+class AgenteAnalizadorTexto:
+    """Agente que se activa cuando hay texto nuevo."""
+    
+    def puede_contribuir(self, clave):
+        return clave == "texto_entrada"
+
+    def ejecutar(self, pizarron):
+        texto = pizarron.leer("texto_entrada")
+        palabras = len(texto.split())
+        pizarron.escribir("conteo_palabras", palabras)
+
+
+class AgenteClasificador:
+    """Agente que clasifica segun el conteo de palabras."""
+    
+    def puede_contribuir(self, clave):
+        return clave == "conteo_palabras"
+
+    def ejecutar(self, pizarron):
+        conteo = pizarron.leer("conteo_palabras")
+        if conteo > 100:
+            categoria = "documento extenso"
+        else:
+            categoria = "documento breve"
+        pizarron.escribir("clasificacion", categoria)
+
+
+# USO: Los agentes se activan en cadena automaticamente
+pizarron = Pizarron()
+pizarron.registrar_agente(AgenteAnalizadorTexto())
+pizarron.registrar_agente(AgenteClasificador())
+
+pizarron.escribir("texto_entrada", "Arquitectura de software...")
+# Se activa AgenteAnalizadorTexto -> escribe conteo
+# Se activa AgenteClasificador -> escribe clasificacion
+                </script>
+            </div>
+        </section>
+
+        <!-- SECCION: Actividad -->
+        <section class="content-section">
+            <h2 class="content-section__title">Actividad del Estudiante</h2>
+            <div class="info-panel info-panel--orange">
+                <p class="info-panel__title">Ejercicio Practico</p>
+                <p class="info-panel__text">
+                    Identificar componentes en arquitectura blackboard.
+                    Analice un sistema de gestion de inventario e identifique cuales
+                    componentes actuarian como agentes que se suscriben al repositorio central.
+                    Dibuje el diagrama indicando las relaciones entre componentes y el almacen.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__line"></div>
+        <p>Arquitectura de Software -- Material Educativo</p>
+        <p class="mt-sm text-muted">Tema 2.2 - Estilos Centrados en Datos</p>
+    </footer>
+
+    <script src="../../js/modules/navigation.js"></script>
+    <script src="../../js/modules/codeCanvas.js"></script>
+    <script src="../../js/modules/interactions.js"></script>
+    <script src="../../js/modules/diagrams.js"></script>
+    <script src="../../js/app.js"></script>
+
+</body>
+</html>
