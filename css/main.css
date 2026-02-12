@@ -20,6 +20,7 @@
     --bg-surface: #22224a;
     --bg-surface-alt: #2a2a58;
     --bg-card: #1e1e42;
+    --bg-code-dark: #0a0a18;
 
     /* --- Acentos --- */
     --accent-cyan: #22d3ee;
@@ -499,7 +500,7 @@ a:hover {
  * resaltado de sintaxis basico y efecto hundido profundo.
  * ---------------------------------------------------------- */
 .code-canvas {
-    background: var(--bg-primary);
+    background: var(--bg-code-dark);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     box-shadow: var(--inset-deep);
@@ -512,7 +513,7 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     padding: var(--space-sm) var(--space-md);
-    background: var(--bg-secondary);
+    background: #0e0e1f;
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--inset-light);
 }
@@ -553,6 +554,7 @@ a:hover {
 .code-canvas__body {
     padding: var(--space-lg);
     overflow-x: auto;
+    background: var(--bg-code-dark);
 }
 
 .code-canvas__body pre {
